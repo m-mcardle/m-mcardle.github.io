@@ -1,19 +1,36 @@
 import NavBar from "../Components/Navbar";
 import '../index.css';
 
-
-
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { fancyDrivers } from "../Data/Drivers";
+import { useParams } from "react-router-dom";
 
-const originalState = fancyDrivers;
+import { drivers } from "../Data/Drivers";
+import { fighters } from "../Data/Fighters";
+import Sidebar from "../Components/Sidebar";
 
 
-function TierListPage(props) {
-  const [driverState, setState] = useState(fancyDrivers);
 
-  const buttonClicked = useCallback(
+function TierListPage() {
+  const params = useParams();
+
+  let data = drivers;
+  switch (params.listType) {
+    case "UFC":
+      data = fighters;
+      break;
+    case "F1":
+      data = drivers;
+      break;
+    default:
+      data = drivers;
+      break;
+  }
+
+  const [driverState, setState] = useState(data);
+
+
+  const buttonClicked = useCallback( // This doesn't erase states in each individual droppableSquare
     () => {
       console.log("Button Clicked");
       const newState = driverState.map(el => {
@@ -31,24 +48,25 @@ function TierListPage(props) {
   return (
     <div className="font-mono w-full h-[150vh] bg-black text-white content-center">
       <NavBar />
+      <Sidebar />
       <div className="text-center">
           Tier List
       </div>
       <div id="row" className="grid grid-cols-8 mx-48 border border-white text-center">
-        <div className="py-5 bg-red-400 border-b">S</div>
-        {xpos.map(x => <DroppableSquare x={x} y="1" oldState={driverState} setter={setState}/>)}
-        <div className="py-5 bg-orange-300 border-b">A</div>
-        {xpos.map(x => <DroppableSquare x={x} y="2" oldState={driverState} setter={setState}/>)}
-        <div className="py-5 bg-yellow-300 border-b">B</div>
-        {xpos.map(x => <DroppableSquare x={x} y="3" oldState={driverState} setter={setState}/>)}
-        <div className="py-5 border-b bg-green-400">C</div>
-        {xpos.map(x => <DroppableSquare x={x} y="4" oldState={driverState} setter={setState}/>)}
-        <div className="py-5 border-b bg-blue-300">D</div>
-        {xpos.map(x => <DroppableSquare x={x} y="5" oldState={driverState} setter={setState}/>)}
-        <div className="py-5 border-b bg-blue-600">E</div>
-        {xpos.map(x => <DroppableSquare x={x} y="6" oldState={driverState} setter={setState}/>)}
-        <div className="py-5 border-b bg-purple-400">F</div>
-        {xpos.map(x => <DroppableSquare x={x} y="7" oldState={driverState} setter={setState}/> )}
+        <div key="S" className="py-5 bg-red-400 border-b">S</div>
+        {xpos.map(x => <DroppableSquare key={`${x}, 1`} oldState={driverState} setter={setState}/>)}
+        <div key="A" className="py-5 bg-orange-300 border-b">A</div>
+        {xpos.map(x => <DroppableSquare key={`${x}, 2`} oldState={driverState} setter={setState}/>)}
+        <div key="B" className="py-5 bg-yellow-300 border-b">B</div>
+        {xpos.map(x => <DroppableSquare key={`${x}, 3`} oldState={driverState} setter={setState}/>)}
+        <div key="C" className="py-5 border-b bg-green-400">C</div>
+        {xpos.map(x => <DroppableSquare key={`${x}, 4`} oldState={driverState} setter={setState}/>)}
+        <div key="D" className="py-5 border-b bg-blue-300">D</div>
+        {xpos.map(x => <DroppableSquare key={`${x}, 5`} oldState={driverState} setter={setState}/>)}
+        <div key="E" className="py-5 border-b bg-blue-600">E</div>
+        {xpos.map(x => <DroppableSquare key={`${x}, 6`} oldState={driverState} setter={setState}/>)}
+        <div key="F" className="py-5 border-b bg-purple-400">F</div>
+        {xpos.map(x => <DroppableSquare key={`${x}, 7`} oldState={driverState} setter={setState}/> )}
       </div>
       <div className="m-5 content-center w-screen text-center">
         <button className="btn" onClick={buttonClicked}>
@@ -62,7 +80,6 @@ function TierListPage(props) {
   );
 }
 
-// Oldstate is undefined for draggable nested in droppable
 function DragableSquare({driver, setter, oldState, onBoard = false}) {
   const [status, setState] = useState(false);
 
@@ -72,7 +89,6 @@ function DragableSquare({driver, setter, oldState, onBoard = false}) {
 		item: { driver },
     end: (item, monitor) => {
       if (monitor.didDrop()) {
-        setState(true);
         driver.state = "placed";
         oldState = oldState.map(el => {
           if (el.driver === driver.image) {
@@ -81,7 +97,9 @@ function DragableSquare({driver, setter, oldState, onBoard = false}) {
             return el;
           }
         });
+        console.log(driver.state);
         setter(oldState)
+        setState(true);
       }
     },
     canDrag: () => {
@@ -101,15 +119,40 @@ function DragableSquare({driver, setter, oldState, onBoard = false}) {
   }
 
   return (
-    <div key={driver.image} className={"max-h-20 max-w-20" + ((driver.state === "placed" && !onBoard) ? " blur-sm" : "")} image={driver.image} ref={drag}>
-      <img src={driver.image} className="py-1 max-h-20 max-w-20" alt="Pic 1"/>
+    <div key={driver.image} className={"max-h-20 max-w-20 " + ((driver.state === "placed" && !onBoard) ? " blur-sm" : "")} image={driver.image} ref={drag}>
+      <img src={driver.image} className="py-1 max-h-20 max-w-20 mx-auto" alt="Tier list item"/>
     </div> 
   );
 }
 
-function DroppableSquare({x, y, setter, oldState}) {
+function DragableBoardSquare({driver, callback}) {
+  const [relocated, setState] = useState(false);
 
-  const [{driver}, setState] = useState({driver: undefined});
+  const [collected, drag, dragPreview] = useDrag(() => ({
+		// "type" is required. It is used by the "accept" specification of drop targets.
+    type: 'square',
+		item: { driver },
+    end: (item, monitor) => {
+      if (monitor.didDrop()) {
+        setState({}); // cleanup state
+        callback();
+      }
+    },
+    options: {
+      dropEffect: 'copy'
+    },
+  }));
+
+  return (
+    <div key={driver.image} className={"max-h-20 max-w-20"} image={driver.image} ref={drag}>
+      <img src={driver.image} className="py-1 max-h-20 max-w-20 mx-auto" alt="Tier list item"/>
+    </div>
+  );
+}
+
+function DroppableSquare({setter, oldState, resetState = false}) {
+
+  const [{driver}, setState] = useState({driver: undefined}); // This is the state we need to clear on button press
 
   const [collected, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
@@ -118,16 +161,25 @@ function DroppableSquare({x, y, setter, oldState}) {
     drop: (item, monitor) => {
       setState({driver: item.driver});
     },
-    canDrop: () => { // TODO fix this
+    canDrop: (item, monitor) => { // TODO fix this
+      if (driver) { console.log("WOW THERE'S A DRIVER HERE"); };
       return (!driver);
     }
   }));
 
+  // use this callback for if the child moves and we need to clear the state here
+  const callback = useCallback(() => {
+    setState({driver: undefined})
+  },
+  []
+  );
+
+  useEffect(() => setState({}),[]);
+
   return (
-    <div id={x+y} className="border-b  text-center content-center min-h-[5rem] min-w-[5rem] border-2" x={x} y={y} ref={drop}
+    <div className="border-b text-center content-center min-h-[5rem] min-w-[5rem]" ref={drop}
       onClick={() => {
         if (!driver) { return; };
-        setState({driver: undefined});
         driver.state = "unplaced";
         oldState = oldState.map(el => {
           if (el.driver === driver.image) {
@@ -137,9 +189,10 @@ function DroppableSquare({x, y, setter, oldState}) {
           }
         });
         setter(oldState);
+        setState({driver: undefined});
       }
       }>
-      {driver ? <DragableSquare driver={driver} onBoard={true} setter={setter} oldState={oldState}/> : undefined}
+      {driver?.state === "placed" ? <DragableBoardSquare driver={driver} setter={setter} oldState={oldState} callback={callback}/> : undefined}
     </div>
   );
 }

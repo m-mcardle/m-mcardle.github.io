@@ -23,10 +23,9 @@ import Yuki from '../Images/Drivers/yuki.png';
 const states = {
   UNPLACED: "unplaced", // unblurred and unplaced
   PLACED: "placed", // should be blurred and there is a matching peice on board
-  ONBOARD: "onboard" // this is the peice on the board
 };
 
-export const fancyDrivers = [
+export const drivers = [
   {
     image: Antonio,
     state: states.UNPLACED
@@ -65,10 +64,6 @@ export const fancyDrivers = [
   },
   {
     image: Kubica,
-    state: states.UNPLACED
-  },
-  {
-    image: Lance,
     state: states.UNPLACED
   },
   {

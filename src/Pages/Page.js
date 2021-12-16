@@ -12,7 +12,9 @@ function Page() {
           <Route path="/" element={<HomePage />} />
           <Route path="/MagnetPage" element={<MagnetPage />} />
           <Route path="/ResumePage" element={<ResumePage />} />
-          <Route path="/TierLists" element={<TierListPage />} />
+          <Route path="/TierLists" element={<TierListPage />} >
+            <Route path=":listType" element={<TierListPage />} />
+          </Route>
         </Routes>
       </Router>
     );
