@@ -1,0 +1,174 @@
+import '../index.css';
+import NavBar from '../Components/Navbar';
+import Header from '../Components/Header';
+import NormalCard from '../Components/NormalCard';
+import ListCard from '../Components/ListCard';
+import BaseCard from '../Components/BaseCard';
+import PythonPicture from '../Images/python.png';
+// import F1Picture from './Images/F1-logo2.png';
+// import AWSPicture from './Images/python.png';
+import VisualizerPicture from '../Images/F1-Visualizer.png';
+// import TwitchPicture from './Images/twitch.png';
+import ExtensionPicture from '../Images/F1_Chat_Extension.png';
+import ChromePicture from '../Images/chrome.png';
+import PerlPicture from '../Images/logo-perl.png';
+import GuelphPicture from '../Images/guelph.png';
+import AwardPicture from '../Images/award.png';
+import MagnetPicture from '../Images/magnet-logo.png';
+// import { useState } from 'react';
+
+function ResumePage() {
+
+  // const [count, setCount] = useState(0);
+
+  return (
+    <div className="font-mono">
+      <NavBar/>
+      <MatrixAnimation/>
+      <div className="lg:px-5 min-h-20 bg-theme-primary">
+        <Header pageDescription='Matthew J. McArdle' color='bg-theme-secondary' textColor="text-theme-primary" content={ContactInfo()}/>
+        <div className='bg-theme-tertiary relative z-20 text-theme-secondary lg:mx-48 border-4 border-gray-600 min-h-screen lg:min-w-min min-w-full px-5'>
+          <BaseCard
+            title="Technical Skills"
+          >
+            <NormalCard
+            elements={[
+              {name: "Languages", value: "C#, C, Python, Bash, Swift, JavaScript, React.js, Perl"},
+              {name: "Technologies", value: "AWS, Microsoft Azure, MacOS X, Linux, iOS"},
+              {name: "Development Tools", value: "Slack, Jira, GitHub, Gerrit, Azure DevOps, Jenkins"},
+              {name: "Other Experience", value: "Kanban, Agile Development, Waterfall Development, pair programming"}
+            ]}
+            />
+          </BaseCard>
+          <BaseCard
+            title="Personal Projects"
+          >
+            <ListCard
+              title="F1 Visualizer Using Python (2021)"
+              link="https://github.com/m-mcardle/f1-visualizer"
+              elements={[
+                "Using Dash and Plot.ly to display a visualizer of F1 standings in all F1 seasons",
+                "Parsed XML responses from a public API into a Plot.ly supported format",
+                "Cached response data using a MySQL database",
+                "Hosted program using AWS to allow for remote access to the visualizer"
+              ]}
+              images={[PythonPicture]}
+              extraSection={
+                <div>
+                  <img src={VisualizerPicture} alt="F1 Visualizer"></img>
+                </div>
+              }
+            />
+            <ListCard
+              title="Embedded Twitch Chat Chrome Extension (2021)"
+              link="https://github.com/m-mcardle/twitch-chat-extension"
+              elements={[
+                "Embeds a Twitch chat element into official F1 and ESPN+ video players",
+                "Developed using HTML and JavaScript",
+                "Allows for F1 or UFC fans to communicate easily during the broadcasts"
+              ]}
+              images={[ChromePicture]}
+              extraSection={
+                <div>
+                  <img src={ExtensionPicture} alt="Twitch Extension"></img>
+                </div>
+              }
+            />
+            <ListCard
+              title="Song Reviewing Software Using Perl and Python (2020)"
+              elements={[
+                "Developed software to parse through results from many different music critics to show an overall consensus on most liked music and artists",
+                "Sends requests through Google Sheets to download raw data and upload the results",
+                "Worked individually to create a program requested and designed by the critics to accomplish their goals"
+              ]}
+              images={[PerlPicture]}
+            />
+          </BaseCard>
+          <BaseCard
+            title="Education"
+          >
+            <ListCard
+              title="Bachelor of Computing, Software Engineering (Co-op) [2019-Present]"
+              elements={[
+                "University of Guelph Dean's List Student",
+                "Recipient of Braithwaite Business Scholarship for excellence in my Major and in business courses",
+                "Planning to achieve a Minor in Business",
+                "87.9% GPA"
+              ]}
+              images={[GuelphPicture]}
+            />
+            <ListCard
+              title="Key Academic Projects"
+              elements={[
+                "GPS XML data parser in C, with a frontend build with JavaScript and implementing a MySQL database (2021)",
+                "Rogue-like game in Java, responsive user interface, procedurally generated maps, serialization for saving progress (2020)"
+              ]}
+            />
+          </BaseCard>
+          <BaseCard
+            title="Accolades and Achievements"
+          >
+            <ListCard
+              elements={[
+                "Deans List student in all academic semesters [2019-Present]",
+                "Braithwaite Business Scholarship Recipient [2020]",
+                "Nominee for the Ian Pavlinic Memorial Award (University of Guelph Co-op Student of the Year) [2021]"
+              ]}
+              images={[AwardPicture]}
+            />
+          </BaseCard>
+          <BaseCard
+            title="Work Experience"
+          >
+            <ListCard
+              title="Magnet Forensics Software Developer Co-op (May 2021-December 2021)"
+              elements={[
+                "Built out XML parsing infrastructure in C#",
+                "Worked with installer scripts written in Bash to deploy a Kubernetes application",
+                "Front end development on a web application using React.js",
+                "Worked with Jenkins to build automation pipelines to deploy test instances of our product",
+                "Used development tools such as Gerrit, Azure DevOps, Jira, and Slack",
+                "Worked with cloud technolgies hosted on AWS and Microsoft Azure"
+              ]}
+              images={[MagnetPicture]}
+            />
+          </BaseCard>
+        </div>
+      </div> 
+    </div>
+  );
+}
+
+function ContactInfo() {
+  return (
+    <div className='grid grid-rows-3'>
+      <p className="text-xl text-center justify-center">
+        (519)-500-3440
+      </p>
+      <p className="text-lg text-center justify-center">
+        matthew.j.mcardle@gmail.com
+      </p>
+      <p className='text-sm justify-center text-center'>
+        212 Golf Course Road, Conestogo, Ontario
+      </p>
+    </div>
+  );
+}
+
+function MatrixAnimation() {
+  // Returns a random integer either  0 to 1:
+  let string = "";
+  for (var i = 1; i < 15000; i++) {
+    string += Math.floor(Math.random() * 2);;
+    if (i % 256 === 0) {
+      string += "\n";
+    }
+  }
+  return (
+    <div className="bg-theme-primary text-theme-secondary min-w-full z-10 matrix-animation">
+      {string}
+    </div>
+  );
+}
+
+export default ResumePage;
