@@ -7,9 +7,12 @@ import { useParams } from "react-router-dom";
 
 import { drivers } from "../Data/Drivers";
 import { fighters } from "../Data/Fighters";
+import { food } from "../Data/FastFood";
 import Sidebar from "../Components/Sidebar";
 
-
+// TODO
+// Add reset button
+// Make better on small screens
 
 function TierListPage() {
   const params = useParams();
@@ -22,116 +25,118 @@ function TierListPage() {
     case "F1":
       data = drivers;
       break;
+    case "Food":
+      data = food;
+      break;
     default:
       data = drivers;
       break;
   }
 
-  const [driverState, setState] = useState(data);
+  const [boardState, setState] = useState(data);
 
 
-  const buttonClicked = useCallback( // This doesn't erase states in each individual droppableSquare
-    () => {
-      console.log("Button Clicked");
-      const newState = driverState.map(el => {
-        el.state = "unplaced";
-        return el;
-      });
-      setState(newState);
-    },
-    [driverState]
-  );
+  // const buttonClicked = useCallback( // TODO This doesn't erase states in each individual droppableSquare
+  //   () => {
+  //     console.log("Button Clicked");
+  //     const newState = boardState.map(el => {
+  //       el.state = "reset";
+  //       return el;
+  //     });
+  //     setState(newState);
+  //   },
+  //   [boardState]
+  // );
 
 
-  const xpos = [1, 2, 3, 4, 5, 6, 7];
+  const positions = [1, 2, 3, 4, 5, 6, 7];
 
   return (
     <div className="font-mono w-full h-[150vh] bg-black text-white content-center">
       <NavBar />
-      <Sidebar />
-      <div className="text-center">
+      <Sidebar /> {/* Make this better, sticky to side and maybe a column */}
+      <div className="my-5 text-center text-5xl">
           Tier List
       </div>
-      <div id="row" className="grid grid-cols-8 mx-48 border border-white text-center">
+      <div id="row" className="grid grid-cols-8 mx-52 border border-white text-center">
         <div key="S" className="py-5 bg-red-400 border-b">S</div>
-        {xpos.map(x => <DroppableSquare key={`${x}, 1`} oldState={driverState} setter={setState}/>)}
+        {positions.map(x => <DroppableSquare tier="S" key={`${x}, 1`} oldState={boardState} setter={setState}/>)}
         <div key="A" className="py-5 bg-orange-300 border-b">A</div>
-        {xpos.map(x => <DroppableSquare key={`${x}, 2`} oldState={driverState} setter={setState}/>)}
+        {positions.map(x => <DroppableSquare tier="A" key={`${x}, 2`} oldState={boardState} setter={setState}/>)}
         <div key="B" className="py-5 bg-yellow-300 border-b">B</div>
-        {xpos.map(x => <DroppableSquare key={`${x}, 3`} oldState={driverState} setter={setState}/>)}
+        {positions.map(x => <DroppableSquare tier="B" key={`${x}, 3`} oldState={boardState} setter={setState}/>)}
         <div key="C" className="py-5 border-b bg-green-400">C</div>
-        {xpos.map(x => <DroppableSquare key={`${x}, 4`} oldState={driverState} setter={setState}/>)}
+        {positions.map(x => <DroppableSquare tier="C" key={`${x}, 4`} oldState={boardState} setter={setState}/>)}
         <div key="D" className="py-5 border-b bg-blue-300">D</div>
-        {xpos.map(x => <DroppableSquare key={`${x}, 5`} oldState={driverState} setter={setState}/>)}
+        {positions.map(x => <DroppableSquare tier="D" key={`${x}, 5`} oldState={boardState} setter={setState}/>)}
         <div key="E" className="py-5 border-b bg-blue-600">E</div>
-        {xpos.map(x => <DroppableSquare key={`${x}, 6`} oldState={driverState} setter={setState}/>)}
+        {positions.map(x => <DroppableSquare tier="E" key={`${x}, 6`} oldState={boardState} setter={setState}/>)}
         <div key="F" className="py-5 border-b bg-purple-400">F</div>
-        {xpos.map(x => <DroppableSquare key={`${x}, 7`} oldState={driverState} setter={setState}/> )}
+        {positions.map(x => <DroppableSquare tier="F" key={`${x}, 7`} oldState={boardState} setter={setState}/> )}
       </div>
-      <div className="m-5 content-center w-screen text-center">
+      {/* TODO fix this <div className="m-5 content-center w-screen text-center">
         <button className="btn" onClick={buttonClicked}>
           Reset
         </button>
+      </div> */}
+      <div className="grid grid-cols-8 gap-4 my-10 mx-48 order border-white min-h-[30px] text-center">
+        {boardState.map(element => <DraggableSquare key={element.name ?? element.image} element={element} oldState={boardState} setter={setState}/>)}
       </div>
-      <div className="grid grid-cols-8 my-10 mx-48 order border-white min-h-[30px] text-center">
-        {driverState.map(driver => <DragableSquare driver={driver} oldState={driverState} setter={setState}/>)}
+      <div className="flex flex-col bg-gray-600 mx-52 opacity-25">
+        <p className="my-1">Drag and drop the pictures to where you rank them</p>
+        <p className="my-1">Select the tier list to do using the sidebar</p>
+        <p className="my-1">Click on individual pieces on the board to reset them, or refresh to reset page</p>
       </div>
     </div>
   );
 }
 
-function DragableSquare({driver, setter, oldState, onBoard = false}) {
+function DraggableSquare({element, setter, oldState}) {
   const [status, setState] = useState(false);
 
   const [collected, drag, dragPreview] = useDrag(() => ({
 		// "type" is required. It is used by the "accept" specification of drop targets.
     type: 'square',
-		item: { driver },
+		item: { element },
     end: (item, monitor) => {
+      console.log(item);
       if (monitor.didDrop()) {
-        driver.state = "placed";
+        element.state = "placed";
         oldState = oldState.map(el => {
-          if (el.driver === driver.image) {
-            return driver;
+          if (el.driver === element.image) {
+            return element;
           } else {
             return el;
           }
         });
-        console.log(driver.state);
         setter(oldState)
         setState(true);
       }
     },
     canDrag: () => {
-      return !(driver.state === "placed" && !onBoard);
+      return !(element.state === "placed");
     },
     options: {
       dropEffect: 'copy'
   },
   }));
 
-  if (status && onBoard) {
-    return null; // Remove image from board
-  }
-
-  if (onBoard && driver.status === "unplaced") {
-    return null;
-  }
-
   return (
-    <div key={driver.image} className={"max-h-20 max-w-20 " + ((driver.state === "placed" && !onBoard) ? " blur-sm" : "")} image={driver.image} ref={drag}>
-      <img src={driver.image} className="py-1 max-h-20 max-w-20 mx-auto" alt="Tier list item"/>
+    <div className={"group max-h-20 max-w-20 " + ((element.state === "placed") ? " blur-sm" : "")} ref={drag}>
+      <p className="group-hover:visible block invisible text-xs overflow-visible whitespace-nowrap">{element.name}</p> 
+      <img src={element.image} className="py-1 max-h-20 max-w-20 mx-auto" alt={element.name}/>
     </div> 
   );
 }
 
-function DragableBoardSquare({driver, callback}) {
+function DraggableBoardSquare({element, callback, setter, oldState}) {
   const [relocated, setState] = useState(false);
+  // maybe this should be [reset, setState] and we reset to empty if we change state?
 
   const [collected, drag, dragPreview] = useDrag(() => ({
 		// "type" is required. It is used by the "accept" specification of drop targets.
     type: 'square',
-		item: { driver },
+		item: { element },
     end: (item, monitor) => {
       if (monitor.didDrop()) {
         setState({}); // cleanup state
@@ -144,46 +149,44 @@ function DragableBoardSquare({driver, callback}) {
   }));
 
   return (
-    <div key={driver.image} className={"max-h-20 max-w-20"} image={driver.image} ref={drag}>
-      <img src={driver.image} className="py-1 max-h-20 max-w-20 mx-auto" alt="Tier list item"/>
+    <div key={element.name} className={"max-h-20 max-w-20"} image={element.image} ref={drag}>
+      <img src={element.image} className="py-1 max-h-20 max-w-20 mx-auto" alt="Tier list item"/>
     </div>
   );
 }
 
-function DroppableSquare({setter, oldState, resetState = false}) {
+function DroppableSquare({tier, setter, oldState}) {
 
-  const [{driver}, setState] = useState({driver: undefined}); // This is the state we need to clear on button press
+  const [{ element }, setState] = useState({element: undefined}); // This is the state we need to clear on button press
 
   const [collected, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
     accept: 'square',
 
     drop: (item, monitor) => {
-      setState({driver: item.driver});
+      setState({element: item.element});
     },
-    canDrop: (item, monitor) => { // TODO fix this
-      if (driver) { console.log("WOW THERE'S A DRIVER HERE"); };
-      return (!driver);
+    canDrop: (item, monitor) => {
+      return (!element);
     }
-  }));
+  }),
+  [element]);
 
   // use this callback for if the child moves and we need to clear the state here
-  const callback = useCallback(() => {
-    setState({driver: undefined})
-  },
-  []
-  );
+  const callback = useCallback(() => { // this callback might be the :goodman: to use in the reset button, but how
+    setState({element: undefined})
+  }, []);
 
   useEffect(() => setState({}),[]);
-
   return (
     <div className="border-b text-center content-center min-h-[5rem] min-w-[5rem]" ref={drop}
       onClick={() => {
-        if (!driver) { return; };
-        driver.state = "unplaced";
+        if (!element) { return; };
+        element.state = "unplaced";
+        element.tier = "none";
         oldState = oldState.map(el => {
-          if (el.driver === driver.image) {
-            return driver;
+          if (el.driver === element.image) {
+            return element;
           } else {
             return el;
           }
@@ -192,7 +195,7 @@ function DroppableSquare({setter, oldState, resetState = false}) {
         setState({driver: undefined});
       }
       }>
-      {driver?.state === "placed" ? <DragableBoardSquare driver={driver} setter={setter} oldState={oldState} callback={callback}/> : undefined}
+      {element ? <DraggableBoardSquare element={element} setter={setter} oldState={oldState} callback={callback}/> : undefined}
     </div>
   );
 }

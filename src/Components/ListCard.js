@@ -33,8 +33,8 @@ function ImageSection({images}) {
     <div className="flex flex-auto justify-end mr-5">
       <div className="snap-x snap-mandatory overflow-auto whitespace-nowrap max-w-36 justify-end">
         {images.map((img) =>
-          <div key={img} className="snap-center scroll-mx-5 inline-block">
-            <img className='object-contain h-10' src={img} alt="idk"></img>
+          <div key={img} className="snap-start scroll-mx-5 inline-block">
+            <img className='object-contain h-10' src={img} alt="Unknown"></img>
           </div>
         )}
       </div>

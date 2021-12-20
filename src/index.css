@@ -4,10 +4,11 @@
 
 a.active {
     font-weight: bold;
+    background: #6666 !important; 
 }
 
 @keyframes matrix {
-    0% {top: -50%;}
+    0% {top: -40%;}
     100% {top: 0%;}
 }
 
@@ -19,6 +20,13 @@ a.active {
     animation-timing-function: linear;
   }
 
-  .testing-1 div {
-      display: block;
-  }
+@keyframes fadeIn {
+    0% {opacity: 0%;}
+    100% {opacity: 100%;}
+}
+
+.fadeIn-animation {
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+}

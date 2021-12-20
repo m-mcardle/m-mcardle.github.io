@@ -5,29 +5,23 @@ import NormalCard from '../Components/NormalCard';
 import ListCard from '../Components/ListCard';
 import BaseCard from '../Components/BaseCard';
 import PythonPicture from '../Images/python.png';
-// import F1Picture from './Images/F1-logo2.png';
-// import AWSPicture from './Images/python.png';
+
 import VisualizerPicture from '../Images/F1-Visualizer.png';
-// import TwitchPicture from './Images/twitch.png';
 import ExtensionPicture from '../Images/F1_Chat_Extension.png';
 import ChromePicture from '../Images/chrome.png';
 import PerlPicture from '../Images/logo-perl.png';
-import GuelphPicture from '../Images/guelph.png';
+import GuelphPicture from '../Images/gryphon.jpeg';
 import AwardPicture from '../Images/award.png';
 import MagnetPicture from '../Images/magnet-logo.png';
-// import { useState } from 'react';
 
 function ResumePage() {
-
-  // const [count, setCount] = useState(0);
-
   return (
     <div className="font-mono">
       <NavBar/>
       <MatrixAnimation/>
       <div className="lg:px-5 min-h-20 bg-theme-primary">
         <Header pageDescription='Matthew J. McArdle' color='bg-theme-secondary' textColor="text-theme-primary" content={ContactInfo()}/>
-        <div className='bg-theme-tertiary relative z-20 text-theme-secondary lg:mx-48 border-4 border-gray-600 min-h-screen lg:min-w-min min-w-full px-5'>
+        <div className='bg-theme-tertiary relative z-20 text-theme-secondary xl:mx-48 border-4 border-gray-600 min-h-screen xl:min-w-min min-w-full px-5'>
           <BaseCard
             title="Technical Skills"
           >
@@ -128,7 +122,7 @@ function ResumePage() {
                 "Front end development on a web application using React.js",
                 "Worked with Jenkins to build automation pipelines to deploy test instances of our product",
                 "Used development tools such as Gerrit, Azure DevOps, Jira, and Slack",
-                "Worked with cloud technolgies hosted on AWS and Microsoft Azure"
+                "Worked with cloud technologies hosted on AWS and Microsoft Azure"
               ]}
               images={[MagnetPicture]}
             />

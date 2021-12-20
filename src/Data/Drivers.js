@@ -19,94 +19,111 @@ import Pierre from '../Images/Drivers/pierre.png';
 import Seb from '../Images/Drivers/seb.png';
 import Valtteri from '../Images/Drivers/valtteri.png';
 import Yuki from '../Images/Drivers/yuki.png';
-
-const states = {
-  UNPLACED: "unplaced", // unblurred and unplaced
-  PLACED: "placed", // should be blurred and there is a matching peice on board
-};
+import { states } from './States';
 
 export const drivers = [
   {
+    name: "Antonio Giovinnazi",
     image: Antonio,
     state: states.UNPLACED
   },
   {
+    name: "Carlos Sainz",
     image: Carlos,
     state: states.UNPLACED
   },
   {
+    name: "Charles Leclerc",
     image: Charles,
     state: states.UNPLACED
   },
   {
+    name: "Sergio Perez",
     image: Checco,
     state: states.UNPLACED
   },
   {
+    name: "Daniel Ricciardo",
     image: Danny,
     state: states.UNPLACED
   },
   {
+    name: "Esteban Ocon",
     image: Esteban,
     state: states.UNPLACED
   },
   {
+    name: "Fernando Alonso",
     image: Fernando,
     state: states.UNPLACED
   },
   {
+    name: "George Russel",
     image: George,
     state: states.UNPLACED
   },
   {
+    name: "Kimi Raikkonen",
     image: Kimi,
     state: states.UNPLACED
   },
   {
+    name: "Robert Kubica",
     image: Kubica,
     state: states.UNPLACED
   },
   {
+    name: "Lance Stroll",
     image: Lance,
     state: states.UNPLACED
   },
   {
+    name: "Lando Norris",
     image: Lando,
     state: states.UNPLACED
   },
   {
+    name: "Lewis Hamilton",
     image: Lewis,
     state: states.UNPLACED
   },
   {
+    name: "Max Verstappen",
     image: Max,
     state: states.UNPLACED
   },
   {
+    name: "Mick Schumacher",
     image: Mick,
     state: states.UNPLACED
   },
   {
+    name: "Nicholas Latifi",
     image: Nicholas,
     state: states.UNPLACED
   },
   {
+    name: "Nikita Mazipin",
     image: Nikita,
     state: states.UNPLACED
   },
   {
+    name: "Pierre Gasly",
     image: Pierre,
     state: states.UNPLACED
   },
   {
+    name: "Sebastian Vettel",
     image: Seb,
     state: states.UNPLACED
   },
   {
+    name: "Valtteri Bottas",
     image: Valtteri,
     state: states.UNPLACED
   },
   {
+    name: "Yuki Tsunoda",
     image: Yuki,
     state: states.UNPLACED
   },

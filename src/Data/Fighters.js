@@ -26,82 +26,102 @@ const states = {
 
 export const fighters = [
   {
+    name: "Alex Volkanovski",
     image: Alex,
     status: states.UNPLACED
   },
   {
+    name: "Henry Cejudo",
     image: Cejudo,
     status: states.UNPLACED
   },
   {
+    name: "Conor McGregor",
     image: Conor,
     status: states.UNPLACED
   },
   {
+    name: "Daniel Cormier",
     image: Dc,
     status: states.UNPLACED
   },
   {
+    name: "Dustin Poirier",
     image: Dustin,
     status: states.UNPLACED
   },
   {
+    name: "Justin Gaethje",
     image: Gaethje,
     status: states.UNPLACED
   },
   {
+    name: "Glover Teixeira",
     image: Glover,
     status: states.UNPLACED
   },
   {
+    name: "George St. Pierre",
     image: Gsp,
     status: states.UNPLACED
   },
   {
+    name: "Isreal Adesanya",
     image: Izzy,
     status: states.UNPLACED
   },
   {
+    name: "Jon Jones",
     image: Jon,
     status: states.UNPLACED
   },
   {
+    name: "Khabib Nurmagomedov",
     image: Khabib,
     status: states.UNPLACED
   },
   {
+    name: "Max Holloway",
     image: Max,
     status: states.UNPLACED
   },
   {
+    name: "Brandon Moreno",
     image: Moreno,
     status: states.UNPLACED
   },
   {
+    name: "Nate Diaz",
     image: Nate,
     status: states.UNPLACED
   },
   {
+    name: "Francis Ngannou",
     image: Ngannou,
     status: states.UNPLACED
   },
   {
+    name: "Nick Diaz",
     image: Nick,
     status: states.UNPLACED
   },
   {
+    name: "Charles Oliveira",
     image: Oliveira,
     status: states.UNPLACED
   },
   {
+    name: "Aljamain Sterling",
     image: Sterling,
     status: states.UNPLACED
   },
   {
+    name: "Tony Ferguson",
     image: Tony,
     status: states.UNPLACED
   },
   {
+    name: "Kamaru Usman",
     image: Usman,
     status: states.UNPLACED
   },
