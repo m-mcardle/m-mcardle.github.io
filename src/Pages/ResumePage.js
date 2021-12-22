@@ -1,11 +1,11 @@
-import '../index.css';
 import NavBar from '../Components/Navbar';
 import Header from '../Components/Header';
-import NormalCard from '../Components/NormalCard';
-import ListCard from '../Components/ListCard';
-import BaseCard from '../Components/BaseCard';
-import PythonPicture from '../Images/python.png';
 
+import BaseCard from '../Components/ResumePage/BaseCard';
+import NormalCard from '../Components/ResumePage/NormalCard';
+import ListCard from '../Components/ResumePage/ListCard';
+
+import PythonPicture from '../Images/python.png';
 import VisualizerPicture from '../Images/F1-Visualizer.png';
 import ExtensionPicture from '../Images/F1_Chat_Extension.png';
 import ChromePicture from '../Images/chrome.png';

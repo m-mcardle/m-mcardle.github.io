@@ -1,5 +1,8 @@
-import '../index.css';
 import NavBar from '../Components/Navbar';
+import DropDownSection from '../Components/DropDownSection';
+
+import InfoSection from '../Components/HomePage/InfoSection';
+
 import Guelph from '../Images/guelph.png';
 import Magnet from '../Images/magnet-logo.png';
 import F1 from '../Images/F1-logo.png'
@@ -16,9 +19,6 @@ import Khabib from '../Images/Fighters/khabib.png';
 import Fluery from '../Images/fleury.gif';
 import iRacing from '../Images/iracing.png';
 import RocketLeague from '../Images/rocketleague.webp';
-
-import DropDownSection from '../Components/DropDownSection';
-import InfoSection from '../Components/InfoSection';
 
 function HomePage() {
   return (
@@ -139,7 +139,7 @@ function HomePage() {
             </div>
           </InfoSection>
           <InfoSection>
-            <p className='font-bold text-xl'>
+            <p className='font-bold text-xl my-2 mx-auto text-center'>
               Sim Racing
             </p>
             <p>
@@ -150,7 +150,7 @@ function HomePage() {
             <img src={iRacing} alt="iRacing" className='m-1 max-h-[300px]'/>
           </InfoSection>
           <InfoSection>
-            <p className='font-bold text xl'>
+            <p className='font-bold text-xl my-2 mx-auto text-center'>
               Video Games
             </p>
             <p>

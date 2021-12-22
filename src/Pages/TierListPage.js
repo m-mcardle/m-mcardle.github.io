@@ -1,115 +1,234 @@
-import NavBar from "../Components/Navbar";
-import '../index.css';
-
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useParams } from "react-router-dom";
+
+import NavBar from "../Components/Navbar";
+import Sidebar from "../Components/TierListPage/Sidebar";
 
 import { drivers } from "../Data/Drivers";
 import { fighters } from "../Data/Fighters";
 import { food } from "../Data/FastFood";
-import Sidebar from "../Components/Sidebar";
+import { EmptyTiers } from '../Data/EmptyTiers';
+
+import myDrivers from '../Data/MyLists/drivers.json';
+import myFighters from '../Data/MyLists/fighters.json';
+import myFood from '../Data/MyLists/food.json';
 
 // TODO
-// Add reset button
+// Add reset button (new states should work), bug where null squares don't accept new elements
 // Make better on small screens
+// Add property to exports that has what list it is for, for validation
+// Clear board before importing my lists
 
 function TierListPage() {
   const params = useParams();
 
   let data = drivers;
+  let currentPage = "F1";
+
   switch (params.listType) {
     case "UFC":
       data = fighters;
+      currentPage = "UFC";
       break;
     case "F1":
       data = drivers;
+      currentPage = "F1";
       break;
     case "Food":
       data = food;
+      currentPage = "Food";
       break;
     default:
       data = drivers;
+      currentPage = "F1";
       break;
   }
 
-  const [boardState, setState] = useState(data);
+  const rankings = EmptyTiers();
+  const [{boardState, tiers, url, injectedState}, setState] = useState({boardState: data, tiers: rankings, url: undefined, injectedState: undefined});
 
+  // TODO using the new states we can probably clear the board now
+  // const clearButton = () => {
+    
+  // };
 
-  // const buttonClicked = useCallback( // TODO This doesn't erase states in each individual droppableSquare
-  //   () => {
-  //     console.log("Button Clicked");
-  //     const newState = boardState.map(el => {
-  //       el.state = "reset";
-  //       return el;
-  //     });
-  //     setState(newState);
-  //   },
-  //   [boardState]
-  // );
+  const upload = useRef(null);
+  const download = useRef(null);
 
+  const exportTiers = () => {
+    let cleanedTiers = EmptyTiers();
+
+    for (const [key, value] of Object.entries(tiers)) {
+      cleanedTiers[key] = value.map(({name}) => ({name: name}));
+    }
+
+    const jsonTiers = JSON.stringify(cleanedTiers);
+    const blob = new Blob([jsonTiers]);
+    const downloadUrl = URL.createObjectURL(blob);
+    setState({boardState, tiers, url: downloadUrl, injectedState})
+  };
+
+  const doUpload = () => {
+    upload.current.click();
+  };
+
+  const doDownload = (customUrl = url) => {
+    console.log("Downloading:", customUrl);
+    download.current.click();
+    URL.revokeObjectURL(customUrl);  // free up storage--no longer needed.
+    setState({boardState, tiers, url: undefined, injectedState});
+  }
+  
+  let elementsToInject = EmptyTiers();
+
+  const openFile = (evt) => {
+    let status = []; // Status output
+    const fileObj = evt.target.files[0];
+    const reader = new FileReader();
+        
+    let fileLoaded = e => {
+      // e.target.result is the file's content as text
+      const fileContents = e.target.result;
+      status.push(`File name: "${fileObj.name}". Length: ${fileContents.length} bytes.`);
+      // Show first 80 characters of the file
+      const first80char = fileContents.substring(0,80);
+      status.push (`First 80 characters of the file:\n${first80char}`)
+      console.log(status);
+
+      const object = JSON.parse(fileContents);
+      setState({boardState: getCustomBoardState(object), tiers: object, url: url, injectedState: getElementsToInject(object)});
+    }
+
+    // Mainline of the method
+    reader.onload = fileLoaded;
+    reader.readAsText(fileObj);
+  }
+
+  const getElementsToInject = (tierObject) => {
+    const tiers = ["S", "A", "B", "C", "D", "E", "F"];
+    for (const i in tiers) {
+      const tier = tiers[i];
+      elementsToInject[tier] = tierObject[tier].map(importEl => {
+        const test = boardState.find(el => el.name === importEl.name);
+        return test;
+      });
+    }
+    return elementsToInject;
+  }
+
+  const getCustomBoardState = (tierObject) => {
+    const unplacedElements = tierObject.NA;
+    const newState = boardState.map(el => {
+      if (unplacedElements.find(unplaced => unplaced.name === el.name) !== undefined) {
+        el.state = "unplaced";
+        return el;
+      } else {
+        el.state = "placed";
+        return el;
+      }
+    });
+    return newState;
+  };
+
+  const loadMyRankings = () => {
+    let object = myDrivers
+    switch (currentPage) {
+      case "UFC":
+        object = myFighters;
+        break;
+      case "F1":
+        object = myDrivers;
+        break;
+      case "Food":
+        object = myFood;
+        break;
+      default:
+        object = myDrivers;
+        break;
+    }
+    setState({boardState: getCustomBoardState(object), tiers: object, url: url, injectedState: getElementsToInject(object)});
+  };
+
+  const callback = (changedElement) => {
+    let newRankings = EmptyTiers();
+    setState({boardState: boardState.map(el => {
+        if (el?.tier === undefined) {
+          el.tier = "NA";
+        }
+        newRankings[el.tier].push({name: el.name});
+        if (el.driver === changedElement.image) {
+          return changedElement;
+        } else {
+          return el;
+        }
+      }),
+      tiers: newRankings,
+      injectedState: undefined
+    });
+  }
 
   const positions = [1, 2, 3, 4, 5, 6, 7];
 
   return (
     <div className="font-mono w-full h-[150vh] bg-black text-white content-center">
       <NavBar />
-      <Sidebar /> {/* Make this better, sticky to side and maybe a column */}
-      <div className="my-5 text-center text-5xl">
-          Tier List
+      <Sidebar currentPage={currentPage}/> {/* Make this better, sticky to side and maybe a column */}
+      <div className='flex mx-auto align-middle'>
+        <div className="my-5 mx-auto text-center lg:text-5xl md:text-lg">
+            Tier List
+        </div>
+        {/* TODO <div className='flex mx-5 align-middle'>
+          <button className='inline my-auto align-middle p-1 border-2 opacity-50' onClick={clearButton}>Clear</button>
+        </div> */}
+        <div className='flex mx-5 align-middle'>
+          <button className='inline my-auto align-middle p-1 border-2 opacity-50' onClick={loadMyRankings}>View my ranking</button>
+        </div>
       </div>
       <div id="row" className="grid grid-cols-8 mx-52 border border-white text-center">
-        <div key="S" className="py-5 bg-red-400 border-b">S</div>
-        {positions.map(x => <DroppableSquare tier="S" key={`${x}, 1`} oldState={boardState} setter={setState}/>)}
-        <div key="A" className="py-5 bg-orange-300 border-b">A</div>
-        {positions.map(x => <DroppableSquare tier="A" key={`${x}, 2`} oldState={boardState} setter={setState}/>)}
-        <div key="B" className="py-5 bg-yellow-300 border-b">B</div>
-        {positions.map(x => <DroppableSquare tier="B" key={`${x}, 3`} oldState={boardState} setter={setState}/>)}
-        <div key="C" className="py-5 border-b bg-green-400">C</div>
-        {positions.map(x => <DroppableSquare tier="C" key={`${x}, 4`} oldState={boardState} setter={setState}/>)}
-        <div key="D" className="py-5 border-b bg-blue-300">D</div>
-        {positions.map(x => <DroppableSquare tier="D" key={`${x}, 5`} oldState={boardState} setter={setState}/>)}
-        <div key="E" className="py-5 border-b bg-blue-600">E</div>
-        {positions.map(x => <DroppableSquare tier="E" key={`${x}, 6`} oldState={boardState} setter={setState}/>)}
-        <div key="F" className="py-5 border-b bg-purple-400">F</div>
-        {positions.map(x => <DroppableSquare tier="F" key={`${x}, 7`} oldState={boardState} setter={setState}/> )}
+        <Square className={"bg-red-400"}>S</Square>
+        {positions.map(x => <DroppableSquare tier="S" key={`${x}, 1`} masterCallback={callback} injectedElement={injectedState?.S[x - 1]}/>)}
+        <Square className={"bg-orange-300"}>A</Square>
+        {positions.map(x => <DroppableSquare tier="A" key={`${x}, 2`} masterCallback={callback} injectedElement={injectedState?.A[x - 1]}/>)}
+        <Square className={"bg-yellow-300"}>B</Square>
+        {positions.map(x => <DroppableSquare tier="B" key={`${x}, 3`} masterCallback={callback} injectedElement={injectedState?.B[x - 1]}/>)}
+        <Square className={"bg-green-400"}>C</Square>
+        {positions.map(x => <DroppableSquare tier="C" key={`${x}, 4`} masterCallback={callback} injectedElement={injectedState?.C[x - 1]}/>)}
+        <Square className={"bg-blue-300"}>D</Square>
+        {positions.map(x => <DroppableSquare tier="D" key={`${x}, 5`} masterCallback={callback} injectedElement={injectedState?.D[x - 1]}/>)}
+        <Square className={"bg-blue-600"}>E</Square>
+        {positions.map(x => <DroppableSquare tier="E" key={`${x}, 6`} masterCallback={callback} injectedElement={injectedState?.E[x - 1]}/>)}
+        <Square className={"bg-purple-400"}>F</Square>
+        {positions.map(x => <DroppableSquare tier="F" key={`${x}, 7`} masterCallback={callback} injectedElement={injectedState?.F[x - 1]}/> )}
       </div>
-      {/* TODO fix this <div className="m-5 content-center w-screen text-center">
-        <button className="btn" onClick={buttonClicked}>
-          Reset
-        </button>
-      </div> */}
-      <div className="grid grid-cols-8 gap-4 my-10 mx-48 order border-white min-h-[30px] text-center">
-        {boardState.map(element => <DraggableSquare key={element.name ?? element.image} element={element} oldState={boardState} setter={setState}/>)}
+      <div className="grid grid-cols-8 gap-4 my-10 mx-48 border-white min-h-[30px] text-center">
+        {boardState.map(element => <DraggableSquare key={element.name ?? element.image} element={element} masterCallback={callback}/>)}
       </div>
-      <div className="flex flex-col bg-gray-600 mx-52 opacity-25">
-        <p className="my-1">Drag and drop the pictures to where you rank them</p>
-        <p className="my-1">Select the tier list to do using the sidebar</p>
-        <p className="my-1">Click on individual pieces on the board to reset them, or refresh to reset page</p>
-      </div>
+      <HelpSection/>
+      <ExportSection doDownload={doDownload} doUpload={doUpload} exportTiers={exportTiers} url={url}/>
+      <a href={url} ref={download} download="tiers.json" className="hidden">
+          Do the download
+        </a>
+        <input type="file" className="hidden"
+            multiple={false}
+            accept=".json"
+            ref={upload}
+            onChange={evt => openFile(evt)}
+        />
     </div>
   );
 }
 
-function DraggableSquare({element, setter, oldState}) {
-  const [status, setState] = useState(false);
+function DraggableSquare({element, masterCallback}) {
+  const [used, setState] = useState(false);
 
-  const [collected, drag, dragPreview] = useDrag(() => ({
+  const [{isDragging}, drag, dragPreview] = useDrag(() => ({
 		// "type" is required. It is used by the "accept" specification of drop targets.
     type: 'square',
 		item: { element },
     end: (item, monitor) => {
-      console.log(item);
       if (monitor.didDrop()) {
         element.state = "placed";
-        oldState = oldState.map(el => {
-          if (el.driver === element.image) {
-            return element;
-          } else {
-            return el;
-          }
-        });
-        setter(oldState)
         setState(true);
       }
     },
@@ -122,24 +241,22 @@ function DraggableSquare({element, setter, oldState}) {
   }));
 
   return (
-    <div className={"group max-h-20 max-w-20 " + ((element.state === "placed") ? " blur-sm" : "")} ref={drag}>
-      <p className="group-hover:visible block invisible text-xs overflow-visible whitespace-nowrap">{element.name}</p> 
-      <img src={element.image} className="py-1 max-h-20 max-w-20 mx-auto" alt={element.name}/>
-    </div> 
+    <div className={"group max-h-[4rem] max-w-[4rem] " + (element.state === "placed" ? " blur-sm" : "") + (isDragging ? " bg-white" : "")} ref={drag}>
+      <p className={"group-hover:visible block invisible text-xs overflow-visible whitespace-nowrap text-center"}>{element.name}</p>
+      <div ref={dragPreview}>
+        <img src={element.image} className="py-1 max-h-[4rem] max-w-[4rem] mx-auto" alt={element.name}/>
+      </div>
+    </div>
   );
 }
 
-function DraggableBoardSquare({element, callback, setter, oldState}) {
-  const [relocated, setState] = useState(false);
-  // maybe this should be [reset, setState] and we reset to empty if we change state?
-
-  const [collected, drag, dragPreview] = useDrag(() => ({
+function DraggableBoardSquare({element, callback}) {
+  const [{isDragging}, drag, dragPreview] = useDrag(() => ({
 		// "type" is required. It is used by the "accept" specification of drop targets.
     type: 'square',
 		item: { element },
     end: (item, monitor) => {
       if (monitor.didDrop()) {
-        setState({}); // cleanup state
         callback();
       }
     },
@@ -149,22 +266,26 @@ function DraggableBoardSquare({element, callback, setter, oldState}) {
   }));
 
   return (
-    <div key={element.name} className={"max-h-20 max-w-20"} image={element.image} ref={drag}>
-      <img src={element.image} className="py-1 max-h-20 max-w-20 mx-auto" alt="Tier list item"/>
+    <div className={"group max-h-[4rem] max-w-[4rem]" + (isDragging ? " bg-white" : "")} ref={drag}>
+      <div ref={dragPreview}>
+        <img src={element.image} className="py-1 max-h-[4rem] max-w-[4rem] mx-auto" alt={element.name}/>
+      </div>
     </div>
   );
 }
 
-function DroppableSquare({tier, setter, oldState}) {
+function DroppableSquare({tier, masterCallback, injectedElement = undefined}) {
 
-  const [{ element }, setState] = useState({element: undefined}); // This is the state we need to clear on button press
+  const [{ element }, setState] = useState({element: undefined});
 
   const [collected, drop] = useDrop(() => ({
     // The type (or types) to accept - strings or symbols
     accept: 'square',
 
     drop: (item, monitor) => {
+      item.element.tier = tier;
       setState({element: item.element});
+      masterCallback(item.element);
     },
     canDrop: (item, monitor) => {
       return (!element);
@@ -173,29 +294,65 @@ function DroppableSquare({tier, setter, oldState}) {
   [element]);
 
   // use this callback for if the child moves and we need to clear the state here
-  const callback = useCallback(() => { // this callback might be the :goodman: to use in the reset button, but how
+  const callback = useCallback(() => {
     setState({element: undefined})
   }, []);
 
+  const clear = useCallback(() => {
+    if (!element) { return; };
+    element.state = "unplaced";
+    element.tier = "NA";
+    setState({element: undefined});
+    masterCallback(element);
+  }, [element, masterCallback]);
+
+  if (injectedElement && injectedElement !== element) {
+    console.log("Test", injectedElement);
+    setState({element: injectedElement});
+  }
+
   useEffect(() => setState({}),[]);
   return (
-    <div className="border-b text-center content-center min-h-[5rem] min-w-[5rem]" ref={drop}
-      onClick={() => {
-        if (!element) { return; };
-        element.state = "unplaced";
-        element.tier = "none";
-        oldState = oldState.map(el => {
-          if (el.driver === element.image) {
-            return element;
-          } else {
-            return el;
-          }
-        });
-        setter(oldState);
-        setState({driver: undefined});
-      }
-      }>
-      {element ? <DraggableBoardSquare element={element} setter={setter} oldState={oldState} callback={callback}/> : undefined}
+    <div className="border-b text-center content-center max-h-[4rem]" ref={drop}
+      onClick={clear}>
+      {element ? <DraggableBoardSquare element={element} callback={callback}/> : undefined}
+    </div>
+  );
+}
+
+function Square({className, children}) {
+  return (
+    <div className={`flex-initial py-5 border-b h-[4rem] ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+function HelpSection() {
+  return (
+    <div className="flex flex-col bg-gray-600 mx-52 opacity-25">
+      <p className="my-1">Drag and drop the pictures to where you rank them</p>
+      <p className="my-1">Select the tier list to do using the sidebar</p>
+      <p className="my-1">Click on individual pieces on the board to reset them, or refresh to reset page</p>
+      <p className="my-1">Click on <b>View my rankings</b> to see how I ranked things</p>
+      <p className="my-1">To export a tier list, make your selections then press <b>Save Tier List</b> and then <b>Download</b></p>
+      <p className="my-1">To import a tier list, click on <b>Upload</b> and then select an exported JSON file</p>
+    </div>
+  );
+}
+
+function ExportSection({exportTiers, doDownload, doUpload, url}) {
+  return (
+    <div className="m-5 w-screen mx-52">
+      <button className="border-2 p-1" onClick={exportTiers}>
+        Save Tier List
+      </button>
+      <button className={`border-2 p-1 mx-5 ${!url ? "text-gray-400" : undefined}`} onClick={doDownload}>
+        Download
+      </button>
+      <button className="border-2 p-1" onClick={doUpload}>
+        Upload
+      </button>
     </div>
   );
 }

@@ -32,7 +32,7 @@ done
 
 string="${string}import states from './States'
 
-export const drivers = [
+export const elements = [
 "
 
 for IMG in ${IMAGE_FILES[@]}; do

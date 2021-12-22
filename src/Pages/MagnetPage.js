@@ -1,6 +1,8 @@
-import '../index.css';
 import NavBar from '../Components/Navbar';
 import Header from '../Components/Header';
+
+import IconImage from '../Components/MagnetPage/IconImage';
+import TextSection from '../Components/MagnetPage/TextSecion';
 
 import city from "../Images/city.webp";
 import logo from "../Images/magnet-logo.png";
@@ -18,9 +20,7 @@ import jenkins from "../Images/jenkins.png";
 import csharp from "../Images/csharp.png";
 import react from "../Images/react.png";
 import refactor from "../Images/refactor.png";
-
-import IconImage from '../Components/IconImage';
-import TextSection from '../Components/TextSecion';
+import kudos from '../Images/kudos.png';
 
 function MagnetPage() {
   return (
@@ -233,7 +233,7 @@ function MagnetPage() {
             </div>
             <div className="flex flex-row my-4">
               <div className="flex flex-col my-auto mx-2">
-                <IconImage image={city} alt="random logo"/>
+                <IconImage image={kudos} alt="Kudos"/>
               </div>
               <TextSection>
                 <p>
@@ -252,6 +252,13 @@ function MagnetPage() {
                 </p>
                 <p className='my-2'>
                   Next I would like to extend another huge thank you Christian Cornelis for his awesome collaborative spirit and his teachings during work we completed together during our parsing epic.
+                  I have him to thank for so much of my technical learnings as he ramped me up in C#, unit tests, microservices, and all of our parsing infrastructure.
+                  He not only was a great mentor, he was also an absolute pleasure to work with as he always had a great attitude and always maintained a fun spirit.
+                </p>
+                <p className='my-2'>
+                  I also need to extend a huge thank you to Robert Nelson, one of the Senior Developers on the Taco team.
+                  I remember during my very first week he stayed on a call with me until 7pm just happily answering all my never-ending questions about all the new things I saw during my first few days.
+                  As our resident expert on our Kubernetes infrastructure, he was a crucial resource for me as started my co-op without ever even hearing about Kubernetes.
                 </p>
               </TextSection>
             </div>
