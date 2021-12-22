@@ -49,9 +49,17 @@ function TierListPage() {
   const [{boardState, tiers, url, injectedState}, setState] = useState({boardState: data, tiers: rankings, url: undefined, injectedState: undefined});
 
   // TODO using the new states we can probably clear the board now
-  // const clearButton = () => {
-    
-  // };
+  const clearButton = () => {
+    const newState = EmptyTiers(); // Figure out how to get this to reset DroppableSquares
+    // Notes:
+    // if undefined is passed to DroppableSquare we prolly don't want anything to happen bc that is what is passed on a non-upload refresh
+
+    setState({boardState: boardState.map(el => { el.state = "unplaced"; return el }), 
+      tiers: undefined,
+      url: undefined,
+      injectedState: newState
+    });
+  };
 
   const upload = useRef(null);
   const download = useRef(null);
@@ -110,8 +118,10 @@ function TierListPage() {
     for (const i in tiers) {
       const tier = tiers[i];
       elementsToInject[tier] = tierObject[tier].map(importEl => {
-        const test = boardState.find(el => el.name === importEl.name);
-        return test;
+        const boardElement = boardState.find(el => el.name === importEl.name);
+        boardElement.status = "placed";
+        boardElement.tier = tier;
+        return boardElement;
       });
     }
     return elementsToInject;
@@ -178,9 +188,9 @@ function TierListPage() {
         <div className="my-5 mx-auto text-center lg:text-5xl md:text-lg">
             Tier List
         </div>
-        {/* TODO <div className='flex mx-5 align-middle'>
+        <div className='flex mx-5 align-middle'>
           <button className='inline my-auto align-middle p-1 border-2 opacity-50' onClick={clearButton}>Clear</button>
-        </div> */}
+        </div>
         <div className='flex mx-5 align-middle'>
           <button className='inline my-auto align-middle p-1 border-2 opacity-50' onClick={loadMyRankings}>View my ranking</button>
         </div>
@@ -202,7 +212,7 @@ function TierListPage() {
         {positions.map(x => <DroppableSquare tier="F" key={`${x}, 7`} masterCallback={callback} injectedElement={injectedState?.F[x - 1]}/> )}
       </div>
       <div className="grid grid-cols-8 gap-4 my-10 mx-48 border-white min-h-[30px] text-center">
-        {boardState.map(element => <DraggableSquare key={element.name ?? element.image} element={element} masterCallback={callback}/>)}
+        {boardState.map(element => <DraggableSquare key={element.name ?? element.image} element={element}/>)}
       </div>
       <HelpSection/>
       <ExportSection doDownload={doDownload} doUpload={doUpload} exportTiers={exportTiers} url={url}/>
@@ -219,8 +229,9 @@ function TierListPage() {
   );
 }
 
-function DraggableSquare({element, masterCallback}) {
+function DraggableSquare({element}) {
   const [used, setState] = useState(false);
+  element.setState = setState;
 
   const [{isDragging}, drag, dragPreview] = useDrag(() => ({
 		// "type" is required. It is used by the "accept" specification of drop targets.
@@ -237,7 +248,7 @@ function DraggableSquare({element, masterCallback}) {
     },
     options: {
       dropEffect: 'copy'
-  },
+    },
   }));
 
   return (
@@ -302,12 +313,12 @@ function DroppableSquare({tier, masterCallback, injectedElement = undefined}) {
     if (!element) { return; };
     element.state = "unplaced";
     element.tier = "NA";
+    element.setState(false);
     setState({element: undefined});
     masterCallback(element);
   }, [element, masterCallback]);
 
   if (injectedElement && injectedElement !== element) {
-    console.log("Test", injectedElement);
     setState({element: injectedElement});
   }
 
