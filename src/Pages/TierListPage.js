@@ -1,23 +1,23 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
+import React, { useRef, useState } from 'react';
 import { useParams } from "react-router-dom";
 
 import NavBar from "../Components/Navbar";
 import Sidebar from "../Components/TierListPage/Sidebar";
+import Square from '../Components/TierListPage/Square';
+import HelpSection from '../Components/TierListPage/HelpSection';
+import ExportSection from '../Components/TierListPage/ExportSection';
+import { DraggableSquare, DroppableSquare } from '../Components/TierListPage/Draggables';
 
 import { drivers } from "../Data/Drivers";
 import { fighters } from "../Data/Fighters";
 import { food } from "../Data/FastFood";
-import { EmptyTiers } from '../Data/EmptyTiers';
+import { Clear, EmptyTiers } from '../Data/EmptyTiers';
 
 import myDrivers from '../Data/MyLists/drivers.json';
 import myFighters from '../Data/MyLists/fighters.json';
 import myFood from '../Data/MyLists/food.json';
 
 // TODO
-// Add reset button (new states should work), bug where null squares don't accept new elements
-// Make better on small screens
-// Add property to exports that has what list it is for, for validation
 // Clear board before importing my lists
 
 function TierListPage() {
@@ -46,12 +46,25 @@ function TierListPage() {
   }
 
   const rankings = EmptyTiers();
-  const [{boardState, tiers, url, injectedState}, setState] = useState({boardState: data, tiers: rankings, url: undefined, injectedState: undefined});
+  const [{boardState, tiers, url, injectedState}, setState] = useState(
+    {
+      boardState: data, 
+      tiers: rankings, 
+      url: undefined, 
+      injectedState: undefined
+    }
+  );
 
-  // TODO using the new states we can probably clear the board now
-  // const clearButton = () => {
-    
-  // };
+  const clearBoard = () => {
+    const newState = Clear();
+
+    setState({
+      boardState: boardState.map(el => { el.state = "unplaced"; el.tier = "NA"; return el }), 
+      tiers: undefined,
+      url: undefined,
+      injectedState: newState
+    });
+  };
 
   const upload = useRef(null);
   const download = useRef(null);
@@ -62,6 +75,7 @@ function TierListPage() {
     for (const [key, value] of Object.entries(tiers)) {
       cleanedTiers[key] = value.map(({name}) => ({name: name}));
     }
+    cleanedTiers.page = currentPage;
 
     const jsonTiers = JSON.stringify(cleanedTiers);
     const blob = new Blob([jsonTiers]);
@@ -97,6 +111,10 @@ function TierListPage() {
       console.log(status);
 
       const object = JSON.parse(fileContents);
+      if (object.page !== currentPage) {
+        console.log("Invalid import given. Export type of", object.page, "does not match current page", currentPage);
+        return;
+      }
       setState({boardState: getCustomBoardState(object), tiers: object, url: url, injectedState: getElementsToInject(object)});
     }
 
@@ -110,8 +128,10 @@ function TierListPage() {
     for (const i in tiers) {
       const tier = tiers[i];
       elementsToInject[tier] = tierObject[tier].map(importEl => {
-        const test = boardState.find(el => el.name === importEl.name);
-        return test;
+        const boardElement = boardState.find(el => el.name === importEl.name);
+        boardElement.status = "placed";
+        boardElement.tier = tier;
+        return boardElement;
       });
     }
     return elementsToInject;
@@ -147,6 +167,7 @@ function TierListPage() {
         object = myDrivers;
         break;
     }
+    clearBoard(); // TODO this isn't working
     setState({boardState: getCustomBoardState(object), tiers: object, url: url, injectedState: getElementsToInject(object)});
   };
 
@@ -157,7 +178,7 @@ function TierListPage() {
           el.tier = "NA";
         }
         newRankings[el.tier].push({name: el.name});
-        if (el.driver === changedElement.image) {
+        if (el.image === changedElement.image) {
           return changedElement;
         } else {
           return el;
@@ -178,14 +199,14 @@ function TierListPage() {
         <div className="my-5 mx-auto text-center lg:text-5xl md:text-lg">
             Tier List
         </div>
-        {/* TODO <div className='flex mx-5 align-middle'>
-          <button className='inline my-auto align-middle p-1 border-2 opacity-50' onClick={clearButton}>Clear</button>
-        </div> */}
+        <div className='flex mx-5 align-middle'>
+          <button className='inline my-auto align-middle p-1 border-2 opacity-50' onClick={clearBoard}>Clear</button>
+        </div>
         <div className='flex mx-5 align-middle'>
           <button className='inline my-auto align-middle p-1 border-2 opacity-50' onClick={loadMyRankings}>View my ranking</button>
         </div>
       </div>
-      <div id="row" className="grid grid-cols-8 mx-52 border border-white text-center">
+      <div id="row" className="grid grid-cols-8 md:mx-52 border border-white text-center">
         <Square className={"bg-red-400"}>S</Square>
         {positions.map(x => <DroppableSquare tier="S" key={`${x}, 1`} masterCallback={callback} injectedElement={injectedState?.S[x - 1]}/>)}
         <Square className={"bg-orange-300"}>A</Square>
@@ -201,8 +222,8 @@ function TierListPage() {
         <Square className={"bg-purple-400"}>F</Square>
         {positions.map(x => <DroppableSquare tier="F" key={`${x}, 7`} masterCallback={callback} injectedElement={injectedState?.F[x - 1]}/> )}
       </div>
-      <div className="grid grid-cols-8 gap-4 my-10 mx-48 border-white min-h-[30px] text-center">
-        {boardState.map(element => <DraggableSquare key={element.name ?? element.image} element={element} masterCallback={callback}/>)}
+      <div className="grid grid-cols-8 gap-4 my-10 md:mx-48 border-white min-h-[30px] text-center">
+        {boardState.map(element => <DraggableSquare key={element.name ?? element.image} element={element}/>)}
       </div>
       <HelpSection/>
       <ExportSection doDownload={doDownload} doUpload={doUpload} exportTiers={exportTiers} url={url}/>
@@ -215,144 +236,6 @@ function TierListPage() {
             ref={upload}
             onChange={evt => openFile(evt)}
         />
-    </div>
-  );
-}
-
-function DraggableSquare({element, masterCallback}) {
-  const [used, setState] = useState(false);
-
-  const [{isDragging}, drag, dragPreview] = useDrag(() => ({
-		// "type" is required. It is used by the "accept" specification of drop targets.
-    type: 'square',
-		item: { element },
-    end: (item, monitor) => {
-      if (monitor.didDrop()) {
-        element.state = "placed";
-        setState(true);
-      }
-    },
-    canDrag: () => {
-      return !(element.state === "placed");
-    },
-    options: {
-      dropEffect: 'copy'
-  },
-  }));
-
-  return (
-    <div className={"group max-h-[4rem] max-w-[4rem] " + (element.state === "placed" ? " blur-sm" : "") + (isDragging ? " bg-white" : "")} ref={drag}>
-      <p className={"group-hover:visible block invisible text-xs overflow-visible whitespace-nowrap text-center"}>{element.name}</p>
-      <div ref={dragPreview}>
-        <img src={element.image} className="py-1 max-h-[4rem] max-w-[4rem] mx-auto" alt={element.name}/>
-      </div>
-    </div>
-  );
-}
-
-function DraggableBoardSquare({element, callback}) {
-  const [{isDragging}, drag, dragPreview] = useDrag(() => ({
-		// "type" is required. It is used by the "accept" specification of drop targets.
-    type: 'square',
-		item: { element },
-    end: (item, monitor) => {
-      if (monitor.didDrop()) {
-        callback();
-      }
-    },
-    options: {
-      dropEffect: 'copy'
-    },
-  }));
-
-  return (
-    <div className={"group max-h-[4rem] max-w-[4rem]" + (isDragging ? " bg-white" : "")} ref={drag}>
-      <div ref={dragPreview}>
-        <img src={element.image} className="py-1 max-h-[4rem] max-w-[4rem] mx-auto" alt={element.name}/>
-      </div>
-    </div>
-  );
-}
-
-function DroppableSquare({tier, masterCallback, injectedElement = undefined}) {
-
-  const [{ element }, setState] = useState({element: undefined});
-
-  const [collected, drop] = useDrop(() => ({
-    // The type (or types) to accept - strings or symbols
-    accept: 'square',
-
-    drop: (item, monitor) => {
-      item.element.tier = tier;
-      setState({element: item.element});
-      masterCallback(item.element);
-    },
-    canDrop: (item, monitor) => {
-      return (!element);
-    }
-  }),
-  [element]);
-
-  // use this callback for if the child moves and we need to clear the state here
-  const callback = useCallback(() => {
-    setState({element: undefined})
-  }, []);
-
-  const clear = useCallback(() => {
-    if (!element) { return; };
-    element.state = "unplaced";
-    element.tier = "NA";
-    setState({element: undefined});
-    masterCallback(element);
-  }, [element, masterCallback]);
-
-  if (injectedElement && injectedElement !== element) {
-    console.log("Test", injectedElement);
-    setState({element: injectedElement});
-  }
-
-  useEffect(() => setState({}),[]);
-  return (
-    <div className="border-b text-center content-center max-h-[4rem]" ref={drop}
-      onClick={clear}>
-      {element ? <DraggableBoardSquare element={element} callback={callback}/> : undefined}
-    </div>
-  );
-}
-
-function Square({className, children}) {
-  return (
-    <div className={`flex-initial py-5 border-b h-[4rem] ${className}`}>
-      {children}
-    </div>
-  );
-}
-
-function HelpSection() {
-  return (
-    <div className="flex flex-col bg-gray-600 mx-52 opacity-25">
-      <p className="my-1">Drag and drop the pictures to where you rank them</p>
-      <p className="my-1">Select the tier list to do using the sidebar</p>
-      <p className="my-1">Click on individual pieces on the board to reset them, or refresh to reset page</p>
-      <p className="my-1">Click on <b>View my rankings</b> to see how I ranked things</p>
-      <p className="my-1">To export a tier list, make your selections then press <b>Save Tier List</b> and then <b>Download</b></p>
-      <p className="my-1">To import a tier list, click on <b>Upload</b> and then select an exported JSON file</p>
-    </div>
-  );
-}
-
-function ExportSection({exportTiers, doDownload, doUpload, url}) {
-  return (
-    <div className="m-5 w-screen mx-52">
-      <button className="border-2 p-1" onClick={exportTiers}>
-        Save Tier List
-      </button>
-      <button className={`border-2 p-1 mx-5 ${!url ? "text-gray-400" : undefined}`} onClick={doDownload}>
-        Download
-      </button>
-      <button className="border-2 p-1" onClick={doUpload}>
-        Upload
-      </button>
     </div>
   );
 }

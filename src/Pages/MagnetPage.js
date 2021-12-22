@@ -216,7 +216,7 @@ function MagnetPage() {
                   <p className='my-2'>
                     Through this experience I learned many fascinating concepts involving code completeness and coding practices.
                     I also of course learned the methodology involved with refactoring production code. 
-                    I developed whitebox tests, blackbox tests, learned about what makes code hard to maintain, learned concepts of how to keep code flexible, and learned so  about ensuring parity through code changes.
+                    I developed whitebox tests, blackbox tests, learned about what makes code hard to maintain, learned concepts of how to keep code flexible, and learned so much about ensuring parity through code changes.
                   </p>
                 </TextSection>
               </div>
