@@ -1,6 +1,6 @@
 function ExportSection({exportTiers, doDownload, doUpload, url}) {
   return (
-    <div className="m-5 w-screen mx-52">
+    <div className="m-5 w-screen md:mx-52">
       <button className="border-2 p-1" onClick={exportTiers}>
         Save Tier List
       </button>

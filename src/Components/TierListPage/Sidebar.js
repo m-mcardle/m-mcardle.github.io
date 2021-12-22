@@ -1,7 +1,7 @@
 function Sidebar({currentPage}) {
   return (
-    <div className='flex-col items-end fixed bg-black text-white z-20 mx-2'>
-      <p className='flex-row mt-10 text-xl font-bold'>
+    <div className='md:flex flex-col hidden items-end fixed bg-black text-white z-20 mx-2'>
+      <p className='flex-row mt-10 lg:text-xl font-bold'>
         Select Tier List
       </p>
       <div className='flex-row'>

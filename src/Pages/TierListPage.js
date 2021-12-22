@@ -18,9 +18,6 @@ import myFighters from '../Data/MyLists/fighters.json';
 import myFood from '../Data/MyLists/food.json';
 
 // TODO
-// Add reset button (new states should work), bug where null squares don't accept new elements
-// Make better on small screens
-// Add property to exports that has what list it is for, for validation
 // Clear board before importing my lists
 
 function TierListPage() {
@@ -49,7 +46,14 @@ function TierListPage() {
   }
 
   const rankings = EmptyTiers();
-  const [{boardState, tiers, url, injectedState}, setState] = useState({boardState: data, tiers: rankings, url: undefined, injectedState: undefined});
+  const [{boardState, tiers, url, injectedState}, setState] = useState(
+    {
+      boardState: data, 
+      tiers: rankings, 
+      url: undefined, 
+      injectedState: undefined
+    }
+  );
 
   const clearBoard = () => {
     const newState = Clear();
@@ -71,6 +75,7 @@ function TierListPage() {
     for (const [key, value] of Object.entries(tiers)) {
       cleanedTiers[key] = value.map(({name}) => ({name: name}));
     }
+    cleanedTiers.page = currentPage;
 
     const jsonTiers = JSON.stringify(cleanedTiers);
     const blob = new Blob([jsonTiers]);
@@ -106,6 +111,10 @@ function TierListPage() {
       console.log(status);
 
       const object = JSON.parse(fileContents);
+      if (object.page !== currentPage) {
+        console.log("Invalid import given. Export type of", object.page, "does not match current page", currentPage);
+        return;
+      }
       setState({boardState: getCustomBoardState(object), tiers: object, url: url, injectedState: getElementsToInject(object)});
     }
 
@@ -197,7 +206,7 @@ function TierListPage() {
           <button className='inline my-auto align-middle p-1 border-2 opacity-50' onClick={loadMyRankings}>View my ranking</button>
         </div>
       </div>
-      <div id="row" className="grid grid-cols-8 mx-52 border border-white text-center">
+      <div id="row" className="grid grid-cols-8 md:mx-52 border border-white text-center">
         <Square className={"bg-red-400"}>S</Square>
         {positions.map(x => <DroppableSquare tier="S" key={`${x}, 1`} masterCallback={callback} injectedElement={injectedState?.S[x - 1]}/>)}
         <Square className={"bg-orange-300"}>A</Square>
@@ -213,7 +222,7 @@ function TierListPage() {
         <Square className={"bg-purple-400"}>F</Square>
         {positions.map(x => <DroppableSquare tier="F" key={`${x}, 7`} masterCallback={callback} injectedElement={injectedState?.F[x - 1]}/> )}
       </div>
-      <div className="grid grid-cols-8 gap-4 my-10 mx-48 border-white min-h-[30px] text-center">
+      <div className="grid grid-cols-8 gap-4 my-10 md:mx-48 border-white min-h-[30px] text-center">
         {boardState.map(element => <DraggableSquare key={element.name ?? element.image} element={element}/>)}
       </div>
       <HelpSection/>
