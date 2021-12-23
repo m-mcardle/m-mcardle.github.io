@@ -6,6 +6,10 @@ import MagnetPage from './MagnetPage';
 import ResumePage from './ResumePage';
 import TierListPage from './TierListPage';
 
+import { drivers } from '../Data/Drivers';
+import { fighters } from '../Data/Fighters';
+import { food } from '../Data/FastFood';
+
 function Page() {
     return (
       <Router>
@@ -13,9 +17,9 @@ function Page() {
           <Route path="/" element={<HomePage />} />
           <Route path="/MagnetPage" element={<MagnetPage />} />
           <Route path="/ResumePage" element={<ResumePage />} />
-          <Route exact path="/TierLists" element={<TierListPage />} >
-            <Route path=":listType" element={<TierListPage />} />
-          </Route>
+          <Route exact path="/TierLists/F1" element={<TierListPage data={drivers} paramPage={"F1"} />} />
+          <Route exact path="/TierLists/UFC" element={<TierListPage data={fighters} paramPage={"UFC"} />} />
+          <Route exact path="/TierLists/Food" element={<TierListPage data={food} paramPage={"Food"} />} />          
         </Routes>
       </Router>
     );

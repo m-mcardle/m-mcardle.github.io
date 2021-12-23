@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { useParams } from "react-router-dom";
 
 import NavBar from "../Components/Navbar";
 import Sidebar from "../Components/TierListPage/Sidebar";
@@ -8,9 +7,6 @@ import HelpSection from '../Components/TierListPage/HelpSection';
 import ExportSection from '../Components/TierListPage/ExportSection';
 import { DraggableSquare, DroppableSquare } from '../Components/TierListPage/Draggables';
 
-import { drivers } from "../Data/Drivers";
-import { fighters } from "../Data/Fighters";
-import { food } from "../Data/FastFood";
 import { Clear, EmptyTiers } from '../Data/EmptyTiers';
 
 import myDrivers from '../Data/MyLists/drivers.json';
@@ -19,41 +15,24 @@ import myFood from '../Data/MyLists/food.json';
 
 // TODO
 // Clear board before importing my lists
+// Clear board before changing page
 
-function TierListPage() {
-  const params = useParams();
-
-  let data = drivers;
-  let currentPage = "F1";
-
-  switch (params.listType) {
-    case "UFC":
-      data = fighters;
-      currentPage = "UFC";
-      break;
-    case "F1":
-      data = drivers;
-      currentPage = "F1";
-      break;
-    case "Food":
-      data = food;
-      currentPage = "Food";
-      break;
-    default:
-      data = drivers;
-      currentPage = "F1";
-      break;
-  }
+function TierListPage({data, paramPage}) {
 
   const rankings = EmptyTiers();
-  const [{boardState, tiers, url, injectedState}, setState] = useState(
+  const [{boardState, tiers, url, injectedState, currentPage}, setState] = useState( // TODO split this out into multiple useState()'s
     {
       boardState: data, 
       tiers: rankings, 
       url: undefined, 
-      injectedState: undefined
+      injectedState: undefined,
+      currentPage: paramPage
     }
   );
+
+  if (paramPage !== currentPage) {
+    setState({boardState: data, tiers, url, injectedState, currentPage: paramPage});
+  }
 
   const clearBoard = () => {
     const newState = Clear();
@@ -194,10 +173,10 @@ function TierListPage() {
   return (
     <div className="font-mono w-full h-[150vh] bg-black text-white content-center">
       <NavBar />
-      <Sidebar currentPage={currentPage}/> {/* Make this better, sticky to side and maybe a column */}
+      <Sidebar /> {/* Make this better, sticky to side and maybe a column */}
       <div className='flex mx-auto align-middle'>
         <div className="my-5 mx-auto text-center lg:text-5xl md:text-lg">
-            Tier List
+            Tier List 
         </div>
         <div className='flex mx-5 align-middle'>
           <button className='inline my-auto align-middle p-1 border-2 opacity-50' onClick={clearBoard}>Clear</button>

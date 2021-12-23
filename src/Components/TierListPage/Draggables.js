@@ -22,7 +22,11 @@ export function DraggableSquare({element}) {
     options: {
       dropEffect: 'copy'
     },
-  }));
+  }),[element]);
+
+  useEffect(() => {
+    return () => setState(false);
+  },[element])
 
   return (
     <div className={"group max-h-[4rem] max-w-[4rem] " + (element.state === "placed" ? " blur-sm" : "") + (isDragging ? " bg-white" : "")} ref={drag}>
