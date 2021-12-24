@@ -16,7 +16,7 @@ function InfoSection({children, span = "col-span-1", rowSpan = "row-span-1", hov
   }, [domRef]);
   
   return(
-    <div ref={domRef} className={`${isVisible ? "fadeIn-animation" : "invisible"} ${span} ${rowSpan} col-span-1 max-h-max mx-auto p-3 border-2 bg-gray-300 shadow-lg` + (hover ? " hover:bg-gray-400" : "")}>
+    <div ref={domRef} className={`${isVisible ? "fadeIn-animation" : "invisible"} ${span} ${rowSpan} grid col-span-1 max-h-max mx-auto p-3 border-2 bg-gray-300 shadow-lg` + (hover ? " hover:bg-gray-400" : "")}>
       {children}
     </div>
   );

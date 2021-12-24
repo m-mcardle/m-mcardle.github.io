@@ -5,14 +5,7 @@ import BaseCard from '../Components/ResumePage/BaseCard';
 import NormalCard from '../Components/ResumePage/NormalCard';
 import ListCard from '../Components/ResumePage/ListCard';
 
-import PythonPicture from '../Images/python.png';
-import VisualizerPicture from '../Images/F1-Visualizer.png';
-import ExtensionPicture from '../Images/F1_Chat_Extension.png';
-import ChromePicture from '../Images/chrome.png';
-import PerlPicture from '../Images/logo-perl.png';
-import GuelphPicture from '../Images/gryphon.jpeg';
-import AwardPicture from '../Images/award.png';
-import MagnetPicture from '../Images/magnet-logo.png';
+import { Images } from '../Data/Images';
 
 function ResumePage() {
   return (
@@ -46,10 +39,10 @@ function ResumePage() {
                 "Cached response data using a MySQL database",
                 "Hosted program using AWS to allow for remote access to the visualizer"
               ]}
-              images={[PythonPicture]}
+              images={[Images.Python]}
               extraSection={
                 <div>
-                  <img src={VisualizerPicture} alt="F1 Visualizer"></img>
+                  <img src={Images.Visualizer} alt="F1 Visualizer"></img>
                 </div>
               }
             />
@@ -61,12 +54,22 @@ function ResumePage() {
                 "Developed using HTML and JavaScript",
                 "Allows for F1 or UFC fans to communicate easily during the broadcasts"
               ]}
-              images={[ChromePicture]}
+              images={[Images.Chrome]}
               extraSection={
                 <div>
-                  <img src={ExtensionPicture} alt="Twitch Extension"></img>
+                  <img src={Images.Extension} alt="Twitch Extension"></img>
                 </div>
               }
+            />
+            <ListCard
+              title="Personal Website Built With React.js and Tailwind CSS (2021)"
+              link="https://m-mcardle.github.io"
+              elements={[
+                "Built responsive web application using the React framework",
+                "Styled pages using Tailwind CSS",
+                "Built interactive page to generate Tier Lists"
+              ]}
+              images={[Images.React]}
             />
             <ListCard
               title="Song Reviewing Software Using Perl and Python (2020)"
@@ -75,7 +78,7 @@ function ResumePage() {
                 "Sends requests through Google Sheets to download raw data and upload the results",
                 "Worked individually to create a program requested and designed by the critics to accomplish their goals"
               ]}
-              images={[PerlPicture]}
+              images={[Images.Perl]}
             />
           </BaseCard>
           <BaseCard
@@ -89,7 +92,7 @@ function ResumePage() {
                 "Planning to achieve a Minor in Business",
                 "87.9% GPA"
               ]}
-              images={[GuelphPicture]}
+              images={[Images.Gryphon]}
             />
             <ListCard
               title="Key Academic Projects"
@@ -108,7 +111,7 @@ function ResumePage() {
                 "Braithwaite Business Scholarship Recipient [2020]",
                 "Nominee for the Ian Pavlinic Memorial Award (University of Guelph Co-op Student of the Year) [2021]"
               ]}
-              images={[AwardPicture]}
+              images={[Images.Award]}
             />
           </BaseCard>
           <BaseCard
@@ -124,7 +127,7 @@ function ResumePage() {
                 "Used development tools such as Gerrit, Azure DevOps, Jira, and Slack",
                 "Worked with cloud technologies hosted on AWS and Microsoft Azure"
               ]}
-              images={[MagnetPicture]}
+              images={[Images.Magnet]}
             />
           </BaseCard>
         </div>

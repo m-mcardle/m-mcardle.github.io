@@ -1,128 +1,105 @@
-import Alex from '../Images/Fighters/alex.png';
-import Cejudo from '../Images/Fighters/cejudo.png';
-import Conor from '../Images/Fighters/conor.png';
-import Dc from '../Images/Fighters/dc.png';
-import Dustin from '../Images/Fighters/dustin.png';
-import Gaethje from '../Images/Fighters/gaethje.png';
-import Glover from '../Images/Fighters/glover.png';
-import Gsp from '../Images/Fighters/gsp.png';
-import Izzy from '../Images/Fighters/izzy.png';
-import Jon from '../Images/Fighters/jon.png';
-import Khabib from '../Images/Fighters/khabib.png';
-import Max from '../Images/Fighters/max.png';
-import Moreno from '../Images/Fighters/moreno.png';
-import Nate from '../Images/Fighters/nate.png';
-import Ngannou from '../Images/Fighters/ngannou.png';
-import Nick from '../Images/Fighters/nick.png';
-import Oliveira from '../Images/Fighters/oliveira.png';
-import Sterling from '../Images/Fighters/sterling.png';
-import Tony from '../Images/Fighters/tony.png';
-import Usman from '../Images/Fighters/usman.png'
-
-const states = {
-  UNPLACED: "unplaced", // unblurred and unplaced
-  PLACED: "placed", // should be blurred and there is a matching peice on board
-};
+import { states } from "./States";
+import { Images } from "./Images";
 
 export const fighters = [
   {
     name: "Alex Volkanovski",
-    image: Alex,
+    image: Images.Alex,
     status: states.UNPLACED
   },
   {
     name: "Henry Cejudo",
-    image: Cejudo,
+    image: Images.Cejudo,
     status: states.UNPLACED
   },
   {
     name: "Conor McGregor",
-    image: Conor,
+    image: Images.Conor,
     status: states.UNPLACED
   },
   {
     name: "Daniel Cormier",
-    image: Dc,
+    image: Images.Dc,
     status: states.UNPLACED
   },
   {
     name: "Dustin Poirier",
-    image: Dustin,
+    image: Images.Dustin,
     status: states.UNPLACED
   },
   {
     name: "Justin Gaethje",
-    image: Gaethje,
+    image: Images.Gaethje,
     status: states.UNPLACED
   },
   {
     name: "Glover Teixeira",
-    image: Glover,
+    image: Images.Glover,
     status: states.UNPLACED
   },
   {
     name: "George St. Pierre",
-    image: Gsp,
+    image: Images.Gsp,
     status: states.UNPLACED
   },
   {
     name: "Isreal Adesanya",
-    image: Izzy,
+    image: Images.Izzy,
     status: states.UNPLACED
   },
   {
     name: "Jon Jones",
-    image: Jon,
+    image: Images.Jon,
     status: states.UNPLACED
   },
   {
     name: "Khabib Nurmagomedov",
-    image: Khabib,
+    image: Images.Khabib,
     status: states.UNPLACED
   },
   {
     name: "Max Holloway",
-    image: Max,
+    image: Images.Holloway,
     status: states.UNPLACED
   },
   {
     name: "Brandon Moreno",
-    image: Moreno,
+    image: Images.Moreno,
     status: states.UNPLACED
   },
   {
     name: "Nate Diaz",
-    image: Nate,
+    image: Images.Nate,
     status: states.UNPLACED
   },
   {
     name: "Francis Ngannou",
-    image: Ngannou,
+    image: Images.Ngannou,
     status: states.UNPLACED
   },
   {
     name: "Nick Diaz",
-    image: Nick,
+    image: Images.Nick,
     status: states.UNPLACED
   },
   {
     name: "Charles Oliveira",
-    image: Oliveira,
+    image: Images.Oliveira,
     status: states.UNPLACED
   },
   {
     name: "Aljamain Sterling",
-    image: Sterling,
+    image: Images.Sterling,
     status: states.UNPLACED
   },
   {
     name: "Tony Ferguson",
-    image: Tony,
+    image: Images.Tony,
     status: states.UNPLACED
   },
   {
     name: "Kamaru Usman",
-    image: Usman,
+    image: Images.Usman,
     status: states.UNPLACED
   },
 ];

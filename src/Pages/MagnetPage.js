@@ -4,30 +4,14 @@ import Header from '../Components/Header';
 import IconImage from '../Components/MagnetPage/IconImage';
 import TextSection from '../Components/MagnetPage/TextSecion';
 
-import city from "../Images/city.webp";
-import logo from "../Images/magnet-logo.png";
-import office from "../Images/office.jpeg";
-import axiom from "../Images/axiom.png";
-import automate from "../Images/automate.png";
-import review from "../Images/review.png";
-import atlas from "../Images/atlas.png";
-
-import nashville from "../Images/nashvile.jpeg";
-import scotland from "../Images/scotland.png";
-
-import bash from "../Images/bash.jpeg";
-import jenkins from "../Images/jenkins.png";
-import csharp from "../Images/csharp.png";
-import react from "../Images/react.png";
-import refactor from "../Images/refactor.png";
-import kudos from '../Images/kudos.png';
+import { Images } from '../Data/Images';
 
 function MagnetPage() {
   return (
     <div className="font-mono">
       <NavBar/>
-      <div style={{ backgroundImage: `url(${city})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed"}}>
-        <Header altDescription='Magnet Forensics Logo' pageDescription='Magnet Forensics Co-op' color='bg-blue-magnet' image={logo}/>
+      <div style={{ backgroundImage: `url(${Images.city})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed"}}>
+        <Header altDescription='Magnet Forensics Logo' pageDescription='Magnet Forensics Co-op' color='bg-blue-magnet' image={Images.logo}/>
         <div className='bg-white xl:mx-48 border-4 border-neutral-900 min-h-screen px-5'>
           <div>
             <p className="my-5 text-2xl font-bold">Welcome!</p>
@@ -41,7 +25,7 @@ function MagnetPage() {
           <div>
             <div className="flex flex-row my-5 content-center">
               <div className="flex-col content-center my-auto mx-2">
-                <img src={office} alt="Magnet Forensics Offices" className="m-auto max-h-[15rem] max-w-[15rem] align-middle"/>
+                <img src={Images.office} alt="Magnet Forensics Offices" className="m-auto max-h-[15rem] max-w-[15rem] align-middle"/>
               </div>
               <div className="flex-col content-center my-auto">
                 <p className="my-3 text-xl font-bold">
@@ -59,7 +43,7 @@ function MagnetPage() {
             <hr/>
             <div className="flex flex-row my-5">
               <div className="flex-col content-center my-auto mx-2 mr-5">
-                <img src={axiom} alt="AXIOM logo" className="max-w-[4rem]"/>
+                <img src={Images.axiom} alt="AXIOM logo" className="max-w-[4rem]"/>
               </div>
               <div className="flex-col">
                 <p className="my-3 text-xl font-bold">
@@ -75,9 +59,9 @@ function MagnetPage() {
             <hr/>
             <div className="flex flex-row my-5">
               <div className="flex-col my-auto mx-2 mr-5">
-                <IconImage image={automate} alt="AUTOMATE logo"/>
-                <IconImage image={atlas} alt="ATLAS logo"/>
-                <IconImage image={review} alt="REVIEW logo"/>
+                <IconImage image={Images.automate} alt="AUTOMATE logo"/>
+                <IconImage image={Images.atlas} alt="ATLAS logo"/>
+                <IconImage image={Images.review} alt="REVIEW logo"/>
               </div>
               <div className="col">
                 <p className="my-3 text-xl font-bold">
@@ -96,8 +80,8 @@ function MagnetPage() {
             <hr/>
             <div className="flex flex-row my-5">
               <div className="flex-col my-auto mx-2 mr-5">
-                <IconImage image={nashville} alt="Nashville PD logo"/>
-                <IconImage image={scotland} alt="Scotland PD logo"/>
+                <IconImage image={Images.nashville} alt="Nashville PD logo"/>
+                <IconImage image={Images.scotland} alt="Scotland PD logo"/>
               </div>
               <div className="col">
                 <p className="my-3 text-xl font-bold">
@@ -126,7 +110,7 @@ function MagnetPage() {
               </div>
               <div className="flex flex-row my-4">
                 <div className="flex-col my-auto mx-2">
-                  <IconImage image={review} alt="REVIEW logo"/>
+                  <IconImage image={Images.review} alt="REVIEW logo"/>
                 </div>
                 <TextSection heading="My Team">
                   <p>
@@ -139,7 +123,7 @@ function MagnetPage() {
               </div>
               <div className="flex flex-row my-4">
                 <div className="flex-col my-auto mx-2">
-                  <IconImage image={bash} alt="Bash logo"/>
+                  <IconImage image={Images.bash} alt="Bash logo"/>
                 </div>
                 <TextSection heading="Bash Installer">
                   <p>
@@ -152,7 +136,7 @@ function MagnetPage() {
               </div>
               <div className="flex flex-row my-4">
                 <div className="flex-col my-auto mx-2">
-                  <IconImage image={jenkins} alt="Jenkins logo"/>
+                  <IconImage image={Images.jenkins} alt="Jenkins logo"/>
                 </div>
                 <TextSection heading="Jenkins / Azure CLI">
                   <p>
@@ -167,7 +151,7 @@ function MagnetPage() {
               </div>
               <div className="flex flex-row my-4">
                 <div className="flex-col my-auto mx-2">
-                  <IconImage image={csharp} alt="C sharp logo"/>
+                  <IconImage image={Images.csharp} alt="C sharp logo"/>
                 </div>
                 <TextSection heading="C# (CLI XML Parsing)">
                   <p>
@@ -183,7 +167,7 @@ function MagnetPage() {
               </div>
               <div className="flex flex-row my-4">
                 <div className="flex-col my-auto mx-2">
-                  <IconImage image={react} alt="React.js logo"/>
+                  <IconImage image={Images.react} alt="React.js logo"/>
                 </div>
                 <TextSection heading="Front-End Development">
                   <p>
@@ -203,7 +187,7 @@ function MagnetPage() {
               </div>
               <div className="flex flex-row my-4">
                 <div className="flex-col my-auto mx-2">
-                  <IconImage image={refactor} alt="Refactoring icon"/>
+                  <IconImage image={Images.refactor} alt="Refactoring icon"/>
                 </div>
                 <TextSection heading="Refactoring">
                   <p>
@@ -233,7 +217,7 @@ function MagnetPage() {
             </div>
             <div className="flex flex-row my-4">
               <div className="flex flex-col my-auto mx-2">
-                <IconImage image={kudos} alt="Kudos"/>
+                <IconImage image={Images.kudos} alt="Kudos"/>
               </div>
               <TextSection>
                 <p>

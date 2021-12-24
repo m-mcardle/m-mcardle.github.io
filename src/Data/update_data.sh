@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ## This is so bad but can work as a easy baseline builder
+## TODO this won't work unless we now update Images.js as well, also doesn't even make sense because we don't even store the images now
 
 FILE=$1
 OUTFILE=${2:-"File.js"}
@@ -30,7 +31,8 @@ for IMG in ${IMAGE_FILES[@]}; do
 
 done
 
-string="${string}import states from './States'
+string="${string}import states from './States';
+import { Images } from './Images';
 
 export const elements = [
 "
@@ -41,7 +43,7 @@ for IMG in ${IMAGE_FILES[@]}; do
   NAME=${NAME%.jpg}
   string="${string}  {
     name: \"$NAME\",
-    image: $NAME,
+    image: Images.$NAME,
     state: states.UNPLACED
   },
 "
