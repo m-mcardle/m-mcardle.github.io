@@ -18,8 +18,8 @@ function HomePage() {
               <img src={Images.Me} alt="Matthew McArdle" className='max-h-[200px]'/>
               <p className='mx-2'>
                 Welcome to my website! On this page I have a few cards that go over some of my interests and experiences.
-                I also have a separate <MyLink to="/MagnetReport" text='page'/> going over my amazing experience at Magnet Forensics during my co-op term.
-                You can also find a <MyLink to="/Resume" text='Digital Resume'/> on another page of this website.
+                I also have a separate <MyLink to="/MagnetPage" text='page'/> going over my amazing experience at Magnet Forensics during my co-op term.
+                You can also find a <MyLink to="/ResumePage" text='Digital Resume'/> on another page of this website.
                 I also built out a silly little <MyLink to="/TierLists/F1" text='Tier List Page'/> as a side project to learn more about React.js so if you want to see how I rank F1 drivers, UFC fighters and some fast food places go take a look, and see how your picks compare to mine.
               </p>
             </div>

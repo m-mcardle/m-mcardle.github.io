@@ -25,7 +25,7 @@ function MagnetPage() {
           <div>
             <div className="flex flex-row my-5 content-center">
               <div className="flex-col content-center my-auto mx-2">
-                <img src={Images.office} alt="Magnet Forensics Offices" className="m-auto max-h-[15rem] max-w-[15rem] align-middle"/>
+                <img src={Images.office} alt="Magnet Forensics Offices" className="m-auto max-h-[15rem] max-w-[15rem] align-middle md:flex hidden"/>
               </div>
               <div className="flex-col content-center my-auto">
                 <p className="my-3 text-xl font-bold">

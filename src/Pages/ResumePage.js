@@ -21,7 +21,7 @@ function ResumePage() {
             <NormalCard
             elements={[
               {name: "Languages", value: "C#, C, Python, Bash, Swift, JavaScript, React.js, Perl"},
-              {name: "Technologies", value: "AWS, Microsoft Azure, MacOS X, Linux, iOS"},
+              {name: "Technologies", value: "AWS, Microsoft Azure, Kubernetes, MacOS X, Linux, iOS"},
               {name: "Development Tools", value: "Slack, Jira, GitHub, Gerrit, Azure DevOps, Jenkins"},
               {name: "Other Experience", value: "Kanban, Agile Development, Waterfall Development, pair programming"}
             ]}
