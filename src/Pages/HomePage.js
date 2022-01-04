@@ -18,9 +18,10 @@ function HomePage() {
               <img src={Images.Me} alt="Matthew McArdle" className='max-h-[200px]'/>
               <p className='mx-2'>
                 Welcome to my website! On this page I have a few cards that go over some of my interests and experiences.
-                I also have a separate <MyLink to="/MagnetPage" text='page'/> going over my amazing experience at Magnet Forensics during my co-op term.
+                I also have a separate <MyLink to="/MagnetPage" text='Co-op Page'/> going over my amazing experience at Magnet Forensics during my co-op term.
                 You can also find a <MyLink to="/ResumePage" text='Digital Resume'/> on another page of this website.
-                I also built out a silly little <MyLink to="/TierLists/F1" text='Tier List Page'/> as a side project to learn more about React.js so if you want to see how I rank F1 drivers, UFC fighters and some fast food places go take a look, and see how your picks compare to mine.
+                I also built out a silly little <MyLink to="/TierLists/F1" text='Tier List Page'/> as a side project to learn more about React.js,
+                so if you want to see how I rank F1 drivers, UFC fighters and some fast food places go take a look, and see how your picks compare to mine.
               </p>
             </div>
           </InfoSection>
@@ -82,25 +83,25 @@ function HomePage() {
                     </p>
                     <DropDownSection extraSection={
                       <div>
-                        <img src={Images.F1Chat} alt="F1 Twitch Chat Extension" className='flex flex-col max-h-[300px] mx-auto'/>
+                        <img src={Images.Extension} alt="F1 Twitch Chat Extension" className='thumbnail mx-auto'/>
                       </div>
                     }/>
                     <p className='my-2'>
                     The second one was to build out a standings visualizer for depicting championship battles as seasons progress.
                     The inspiration came to me while watching the amazing 2021 F1 season unfold. 
                     This included a back and forth battle between Max Verstappen and Lewis Hamilton which ended up with them being TIED on points going into the 22nd/final race.
-                    I wanted to visually see their points totals progress (because I love graphed statistics), so I used the public <a href="https://ergast.com/mrd/" className='font-bold'>Ergast F1 API </a> 
-                    to get results and used the Python Plot.ly library to graph them.
+                    I wanted to visually see their points totals progress (because I love visualized statistics), so I used the public <a href="https://ergast.com/mrd/" className='font-bold'>Ergast F1 API</a> to get results 
+                    and used the Python <a href="https://plotly.com/" className='font-bold'>Plot.ly</a> library to graph them.
                     </p>
                     <DropDownSection extraSection={
                       <div>
-                        <img src={Images.Visualizer} alt="F1 Standings Visualizer" className='flex flex-col max-h-[300px] mx-auto'/>
+                        <img src={Images.Visualizer} alt="F1 Standings Visualizer" className='thumbnail mx-auto'/>
                       </div>
                     }/>
                   </div>
                 </InfoSection>
                 <InfoSection>
-                  <img src={Images.Gulf} alt="Gulf McLaren F1 car" className='flex flex-col max-h-[300px] mx-auto'/>
+                  <img src={Images.Gulf} alt="Gulf McLaren F1 car" className='thumbnail mx-auto'/>
                 </InfoSection>
               </div>
             </div>
@@ -111,7 +112,7 @@ function HomePage() {
               UFC is pretty neat. Favourite fighter is Khabib.
               If you want to see how I rank a bunch of other fighters, check out my Tier List page by clicking <MyLink to="/TierLists/UFC"/>.
             </p>
-            <img src={Images.Khabib} alt="Khabib Nurmagomedov" className='flex flex-col max-h-[300px] mx-auto'/>
+            <img src={Images.Khabib} alt="Khabib Nurmagomedov" className='thumbnail mx-auto'/>
           </InfoSection>
           <InfoSection>
             <p className='font-bold text-xl my-2 mx-auto text-center'>NHL</p>
@@ -119,7 +120,7 @@ function HomePage() {
               Been a hockey fan my whole life, but more recently haven't had the same interest.
               Favourite player in Marc Andre Fleury cause he's the goat, so I've basically been bouncing around who I support cause he keeps getting traded.
             </p>
-            <img src={Images.Fluery} alt="Marc Andre Fleury" className='flex flex-col max-h-[300px] mx-auto'/>
+            <img src={Images.Fluery} alt="Marc Andre Fleury" className='thumbnail mx-auto'/>
           </InfoSection>
           <InfoSection rowSpan='row-span-2 content-between'>
             <div className='flex-row row-span-1'>
@@ -133,15 +134,15 @@ function HomePage() {
               </p>
             </div>
             <div>
-              <img src={Images.GrandBend} alt="Grand Bend Motorplex" className='m-1 max-h-[300px]'/>
+              <img src={Images.GrandBend} alt="Grand Bend Motorplex" className='thumbnail'/>
             </div>
             <div>
               <div className='flex flex-row overflow-auto'>
-                  <img src={Images.Atom} alt="Ariel Atom" className='m-1 max-h-[300px]'/>
-                  <img src={Images.Lotus} alt="Lotus Elise" className='m-1 max-h-[300px]'/>
-                  <img src={Images.Caterham} alt="Caterham 7" className='m-1 max-h-[300px]'/>
-                  <img src={Images.Veloster} alt="Veloster N" className='m-1 max-h-[300px]'/>
-                  <img src={Images.Fiat} alt="Fiat 500" className='m-1 max-h-[300px]'/>
+                  <img src={Images.Atom} alt="Ariel Atom" className='thumbnail'/>
+                  <img src={Images.Lotus} alt="Lotus Elise" className='thumbnail'/>
+                  <img src={Images.Caterham} alt="Caterham 7" className='thumbnail'/>
+                  <img src={Images.Veloster} alt="Veloster N" className='thumbnail'/>
+                  <img src={Images.Fiat} alt="Fiat 500" className='thumbnail'/>
               </div>
               <p className='text-xs opacity-50 text-center'>Scroll to see all the cars I've driven so far</p>
             </div>
@@ -155,7 +156,7 @@ function HomePage() {
               At my parents place I have a setup with a Thrustmaster T500 and a decent PC that can handle most sims. 
               My go-to sim is iRacing and I typically try and race open-wheelers like the Formula 3 or Formula Renault.
             </p>
-            <img src={Images.iRacing} alt="iRacing" className='m-1 max-h-[300px]'/>
+            <img src={Images.iRacing} alt="iRacing" className='thumbnail'/>
           </InfoSection>
           <InfoSection>
             <p className='font-bold text-xl my-2 mx-auto text-center'>
@@ -164,7 +165,7 @@ function HomePage() {
             <p>
               Mainly into FPS games and Sports Games, and at the moment I basically only play Rocket League with my roommates.
             </p>
-            <img src={Images.RocketLeague} alt="Rocket League" className='m-1 max-h-[300px]'/>
+            <img src={Images.RocketLeague} alt="Rocket League" className='thumbnail'/>
           </InfoSection>
         </div>
       </div>

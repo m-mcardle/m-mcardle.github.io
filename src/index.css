@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .thumbnail {
+        @apply m-1 max-h-[300px] border-2 border-white;
+    }
+}
+
 a.active {
     font-weight: bold;
     background: #6666 !important; 

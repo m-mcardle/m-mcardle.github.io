@@ -102,6 +102,8 @@ export function DroppableSquare({tier, masterCallback, injectedElement = undefin
     if (injectedElement && injectedElement !== "CLEAR" && injectedElement !== element) {
       setState({element: injectedElement});
     } else if (element && injectedElement === "CLEAR") {
+      element.state = "unplaced";
+      element.tier = "NA";
       element.setState(false);
       setState({element: undefined});
       masterCallback(element);

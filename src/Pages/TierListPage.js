@@ -20,18 +20,19 @@ import myFood from '../Data/MyLists/food.json';
 function TierListPage({data, paramPage}) {
 
   const rankings = EmptyTiers();
-  const [{boardState, tiers, url, injectedState, currentPage}, setState] = useState( // TODO split this out into multiple useState()'s
+  const [{boardState, tiers, injectedState, currentPage}, setState] = useState( // TODO split this out into multiple useState()'s
     {
       boardState: data, 
       tiers: rankings, 
-      url: undefined, 
       injectedState: undefined,
       currentPage: paramPage
     }
   );
 
+  const [url, setDownloadUrl] = useState(undefined);
+
   if (paramPage !== currentPage) {
-    setState({boardState: data, tiers, url, injectedState, currentPage: paramPage});
+    setState({boardState: data, tiers, injectedState, currentPage: paramPage});
   }
 
   const clearBoard = () => {
@@ -40,7 +41,6 @@ function TierListPage({data, paramPage}) {
     setState({
       boardState: boardState.map(el => { el.state = "unplaced"; el.tier = "NA"; return el }), 
       tiers: undefined,
-      url: undefined,
       injectedState: newState
     });
   };
@@ -59,7 +59,7 @@ function TierListPage({data, paramPage}) {
     const jsonTiers = JSON.stringify(cleanedTiers);
     const blob = new Blob([jsonTiers]);
     const downloadUrl = URL.createObjectURL(blob);
-    setState({boardState, tiers, url: downloadUrl, injectedState})
+    setDownloadUrl(downloadUrl);
   };
 
   const doUpload = () => {
@@ -70,7 +70,7 @@ function TierListPage({data, paramPage}) {
     console.log("Downloading:", customUrl);
     download.current.click();
     URL.revokeObjectURL(customUrl);  // free up storage--no longer needed.
-    setState({boardState, tiers, url: undefined, injectedState});
+    setDownloadUrl(undefined);
   }
   
   let elementsToInject = EmptyTiers();
@@ -94,7 +94,7 @@ function TierListPage({data, paramPage}) {
         console.log("Invalid import given. Export type of", object.page, "does not match current page", currentPage);
         return;
       }
-      setState({boardState: getCustomBoardState(object), tiers: object, url: url, injectedState: getElementsToInject(object)});
+      setState({boardState: getCustomBoardState(object), tiers: object, injectedState: getElementsToInject(object)});
     }
 
     // Mainline of the method
@@ -146,8 +146,8 @@ function TierListPage({data, paramPage}) {
         object = myDrivers;
         break;
     }
-    clearBoard(); // TODO this isn't working
-    setState({boardState: getCustomBoardState(object), tiers: object, url: url, injectedState: getElementsToInject(object)});
+    clearBoard(); // TODO this isn't working, the re-render doesn't occur with the new injectedElements
+    setState({boardState: getCustomBoardState(object), tiers: object, injectedState: getElementsToInject(object)});
   };
 
   const callback = (changedElement) => {
