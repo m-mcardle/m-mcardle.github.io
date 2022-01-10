@@ -1,7 +1,8 @@
-function NavigateButton({text, clicked}) {
+function NavigateButton({text, clicked, icon}) {
   return (
-    <button className="flex text-center hover:bg-sky-800" onClick={clicked}>
-      <p className='flex my-auto sm:text-md text-sm'>{text}</p>
+    <button className="flex flex-row text-center hover:bg-sky-800 space-x-2" onClick={clicked}>
+      {icon}
+      <p className='flex my-auto text-xs'>{text}</p>
     </button>
   );
 }

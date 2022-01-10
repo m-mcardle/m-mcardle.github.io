@@ -4,7 +4,7 @@ function NormalCard({title, elements}) {
         <p className="text-lg font-bold">{title}</p>
         {title ? <hr/> : undefined}
         {elements.map(({name, value}) =>
-          <p key={name}><b>{name}:</b> {value}</p>
+          <p key={name} className="hover:font-bold"><b>{name}:</b> {value}</p>
         )}
       </div>
     );

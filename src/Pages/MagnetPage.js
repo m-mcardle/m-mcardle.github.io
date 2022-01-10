@@ -1,5 +1,6 @@
 import NavBar from '../Components/Navbar';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 import IconImage from '../Components/MagnetPage/IconImage';
 import TextSection from '../Components/MagnetPage/TextSection';
@@ -8,6 +9,10 @@ import { Images } from '../Data/Images';
 import GoalSection, { GradeSection, SuccessLevels } from '../Components/MagnetPage/GoalSection';
 import NavigateButton from '../Components/MagnetPage/NavigateButton';
 
+import { MdWavingHand, MdSummarize } from 'react-icons/md';
+import { BsFillInfoCircleFill } from 'react-icons/bs';
+import { BiTask } from 'react-icons/bi';
+import { ImCheckboxChecked, ImHappy2 } from 'react-icons/im';
 
 import { useRef } from 'react';
 
@@ -26,13 +31,13 @@ function MagnetPage() {
       <div style={{ backgroundImage: `url(${Images.City})`, backgroundRepeat: "no-repeat", backgroundAttachment: "fixed"}}>
         <div className='fixed md:block hidden items-end left-0 top-0 h-full pt-10 px-2 bg-blue-magnet z-[19] w-32 align-text-bottom '>
           <p className='font-bold text-lg my-3'>Navigate</p>
-          <div className="relative">
-            <NavigateButton clicked={() => intro.current.scrollIntoView()} text="Introduction"/>
-            <NavigateButton clicked={() => about.current.scrollIntoView()} text="About Magnet"/>
-            <NavigateButton clicked={() => myTasks.current.scrollIntoView()} text="My Tasks"/>
-            <NavigateButton clicked={() => myGoals.current.scrollIntoView()} text="My Goals"/>
-            <NavigateButton clicked={() => kudos.current.scrollIntoView()} text="Kudos"/>
-            <NavigateButton clicked={() => conclusion.current.scrollIntoView()} text="Conclusion"/>
+          <div className="relative space-y-2">
+            <NavigateButton clicked={() => intro.current.scrollIntoView()} text="Introduction" icon={<MdWavingHand />}/>
+            <NavigateButton clicked={() => about.current.scrollIntoView()} text="About Magnet" icon={<BsFillInfoCircleFill/>}/>
+            <NavigateButton clicked={() => myTasks.current.scrollIntoView()} text="My Tasks" icon={<BiTask/>}/>
+            <NavigateButton clicked={() => myGoals.current.scrollIntoView()} text="My Goals" icon={<ImCheckboxChecked/>}/>
+            <NavigateButton clicked={() => kudos.current.scrollIntoView()} text="Kudos" icon={<ImHappy2/>}/>
+            <NavigateButton clicked={() => conclusion.current.scrollIntoView()} text="Conclusion" icon={<MdSummarize/>}/>
           </div>
         </div>
         <div className='flex flex-col'>
@@ -466,6 +471,7 @@ function MagnetPage() {
         </div>
       </div>
     </div>
+    <Footer className="z-20"/>
   </div>
   );
 }

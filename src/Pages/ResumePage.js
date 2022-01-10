@@ -1,5 +1,6 @@
 import NavBar from '../Components/Navbar';
 import Header from '../Components/Header';
+import Footer from '../Components/Footer';
 
 import BaseCard from '../Components/ResumePage/BaseCard';
 import NormalCard from '../Components/ResumePage/NormalCard';
@@ -7,13 +8,15 @@ import ListCard from '../Components/ResumePage/ListCard';
 
 import { Images } from '../Data/Images';
 
+import { AiFillLinkedin } from 'react-icons/ai'
+
 function ResumePage() {
   return (
     <div className="font-mono">
       <NavBar/>
       <MatrixAnimation/>
       <div className="lg:px-5 min-h-20 bg-theme-primary">
-        <div className='bg-theme-tertiary relative z-20 text-theme-secondary xl:mx-48 border-4 border-gray-600 min-h-screen xl:min-w-min min-w-full'>
+        <div className='bg-theme-tertiary relative z-20 text-theme-secondary xl:mx-48 border-4 border-gray-600 min-h-screen xl:min-w-min min-w-full mb-5'>
           <Header pageDescription='Matthew J. McArdle' color='bg-theme-secondary' textColor="text-theme-primary" content={ContactInfo()}/>
           <div className='px-5'>
             <BaseCard
@@ -26,6 +29,22 @@ function ResumePage() {
                 {name: "Development Tools", value: "Slack, Jira, GitHub, Gerrit, Azure DevOps, Jenkins"},
                 {name: "Other Experience", value: "Kanban, Agile Development, Waterfall Development, pair programming"}
               ]}
+              />
+            </BaseCard>
+            <BaseCard
+              title="Work Experience"
+            >
+              <ListCard
+                title="Magnet Forensics Software Developer Co-op (May 2021-December 2021)"
+                elements={[
+                  "Developed microservices written in C#",
+                  "Worked with installer scripts written in Bash to deploy a Kubernetes application",
+                  "Front end development on a web application using React.js",
+                  "Worked with Jenkins to build automation pipelines for Continuous Integration and Continuous Deployment",
+                  "Used development tools such as Gerrit, Azure DevOps, Jira, and Slack",
+                  "Worked with cloud infrastructure hosted on AWS and Microsoft Azure"
+                ]}
+                images={[Images.Magnet]}
               />
             </BaseCard>
             <BaseCard
@@ -64,7 +83,7 @@ function ResumePage() {
               />
               <ListCard
                 title="Personal Website Built With React.js and Tailwind CSS (2021)"
-                link="https://m-mcardle.github.io"
+                link="https://github.com/m-mcardle/m-mcardle.github.io"
                 elements={[
                   "Built responsive web application using the React framework",
                   "Styled pages using Tailwind CSS",
@@ -89,8 +108,8 @@ function ResumePage() {
                 title="Bachelor of Computing, Software Engineering (Co-op) [2019-Present]"
                 elements={[
                   "University of Guelph Dean's List Student",
-                  "Recipient of Braithwaite Business Scholarship for excellence in my Major and in business courses",
                   "Planning to achieve a Minor in Business",
+                  "In-course experience with C, Java, Python, and Perl",
                   "87.9% GPA"
                 ]}
                 images={[Images.Gryphon]}
@@ -111,36 +130,22 @@ function ResumePage() {
                   "Deans List student in all academic semesters [2019-Present]",
                   "Braithwaite Business Scholarship Recipient [2020]",
                   "Nominee for the Ian Pavlinic Memorial Award (University of Guelph Co-op Student of the Year) [2021]"
+                  
                 ]}
                 images={[Images.Award]}
               />
             </BaseCard>
-            <BaseCard
-              title="Work Experience"
-            >
-              <ListCard
-                title="Magnet Forensics Software Developer Co-op (May 2021-December 2021)"
-                elements={[
-                  "Built out XML parsing infrastructure in C#",
-                  "Worked with installer scripts written in Bash to deploy a Kubernetes application",
-                  "Front end development on a web application using React.js",
-                  "Worked with Jenkins to build automation pipelines to deploy test instances of our product",
-                  "Used development tools such as Gerrit, Azure DevOps, Jira, and Slack",
-                  "Worked with cloud technologies hosted on AWS and Microsoft Azure"
-                ]}
-                images={[Images.Magnet]}
-              />
-            </BaseCard>
           </div>
         </div>
-      </div> 
+      </div>
+      <Footer className="z-20"/>
     </div>
   );
 }
 
 function ContactInfo() {
   return (
-    <div className='grid grid-rows-3'>
+    <div>
       <p className="text-xl text-center justify-center">
         (519)-500-3440
       </p>
@@ -150,6 +155,10 @@ function ContactInfo() {
       <p className='text-sm justify-center text-center'>
         212 Golf Course Road, Conestogo, Ontario
       </p>
+      <a href="https://www.linkedin.com/in/matthew-j-mcardle/" className='text-xs flex flex-row justify-center text-center items-center space-x-2 mb-2 hover:underline'>
+        <AiFillLinkedin className='fill-blue-500 bg-white align-center'/>
+        <p>LinkedIn.com/in/matthew-j-mcardle/</p>
+      </a>
     </div>
   );
 }

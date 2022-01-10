@@ -1,5 +1,7 @@
 import MyLink from '../Components/MyLink';
 import NavBar from '../Components/Navbar';
+import Footer from '../Components/Footer';
+
 import DropDownSection from '../Components/DropDownSection';
 
 import InfoSection from '../Components/HomePage/InfoSection';
@@ -34,15 +36,17 @@ function HomePage() {
               <ul className='ml-3 list-disc'>
                 <li>3rd year student</li>
                 <li>Planning to take a Minor in business</li>
-                <li>Deans List student with GPA of 87.9% GPA</li>
+                <li>Deans List student with GPA of 87.9%</li>
               </ul>
             }/>
           </InfoSection>
           <InfoSection span="md:col-span-2">
             <img src={Images.Magnet} alt="Magnet Forensics" className='max-h-[100px] mx-auto'/>
-            <p className="m-2">
+            <p>
             I've just completed an amazing co-op term at Magnet Forensics.
-            They are a Waterloo company specializing in building tools for Law Enforcement or Private Investigators to uncover digital evidence on devices.<br/>
+            They are a Waterloo company specializing in building tools for Law Enforcement or Private Investigators to uncover digital evidence on devices.
+            </p>
+            <p>
             If you want to learn more about it click <MyLink to="MagnetPage" /> to go to my page dedicated to my experience there.
             </p>
           </InfoSection>
@@ -90,8 +94,8 @@ function HomePage() {
                     The second one was to build out a standings visualizer for depicting championship battles as seasons progress.
                     The inspiration came to me while watching the amazing 2021 F1 season unfold. 
                     This included a back and forth battle between Max Verstappen and Lewis Hamilton which ended up with them being TIED on points going into the 22nd/final race.
-                    I wanted to visually see their points totals progress (because I love visualized statistics), so I used the public <a href="https://ergast.com/mrd/" className='font-bold'>Ergast F1 API</a> to get results 
-                    and used the Python <a href="https://plotly.com/" className='font-bold'>Plot.ly</a> library to graph them.
+                    I wanted to visually see their points totals progress (because I love visualized statistics), so I used the public <a href="https://ergast.com/mrd/" className='font-bold hover:underline'>Ergast F1 API</a> to get results 
+                    and used the Python <a href="https://plotly.com/" className='font-bold hover:underline'>Plot.ly</a> library to graph them.
                     </p>
                     <DropDownSection extraSection={
                       <div>
@@ -127,8 +131,6 @@ function HomePage() {
               <p className='font-bold text-xl my-2 mx-auto text-center'>Track Days</p>
               <p>
                 One of my favourite ways to spend a day is driving at a track. 
-              One of my favourite ways to spend a day is driving at a track. 
-                One of my favourite ways to spend a day is driving at a track. 
                 My Dad and I have joined a group of some really fun people to rent out the Grand Bend Motorplex for some open lapping every other week of the summer.
                 Most of our driving is done in my Dad's Ariel Atom or my Hyundai Veloster N but I've been lucky enough to try out a Lotus Elise, Caterham 7, and a fun little Fiat 500 Abarth.
               </p>
@@ -153,7 +155,7 @@ function HomePage() {
             </p>
             <p>
               One hobby I've really taken a liking to is Sim Racing. 
-              At my parents place I have a setup with a Thrustmaster T500 and a decent PC that can handle most sims. 
+              I have a setup with a Thrustmaster T500 and a decent PC that can handle most sims. 
               My go-to sim is iRacing and I typically try and race open-wheelers like the Formula 3 or Formula Renault.
             </p>
             <img src={Images.iRacing} alt="iRacing" className='thumbnail'/>
@@ -168,6 +170,7 @@ function HomePage() {
             <img src={Images.RocketLeague} alt="Rocket League" className='thumbnail'/>
           </InfoSection>
         </div>
+        <Footer />
       </div>
     </div>
   );

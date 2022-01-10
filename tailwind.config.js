@@ -21,7 +21,7 @@ module.exports = {
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
-      mono: ['monospace', 'mono']
+      mono: ['Menlo']
     },
   },
   plugins: [],

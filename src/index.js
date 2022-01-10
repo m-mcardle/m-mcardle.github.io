@@ -7,6 +7,10 @@ import reportWebVitals from './reportWebVitals';
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { DndProvider } from 'react-dnd'
 
+import AOS from 'aos';
+
+AOS.init();
+
 ReactDOM.render(
   <React.StrictMode className="scroll-smooth">
     <DndProvider backend={HTML5Backend}>

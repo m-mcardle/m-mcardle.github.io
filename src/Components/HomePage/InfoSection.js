@@ -1,22 +1,8 @@
-import {useState, useRef, useEffect} from 'react';
+import "aos/dist/aos.css";
 
-function InfoSection({children, span = "col-span-1", rowSpan = "row-span-1", hover = true}) {
-  const [isVisible, setVisible] = useState(false);
-
-  const domRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => (entry.isIntersecting && setVisible(true)));
-    });
-    const copy = domRef.current;
-    observer.observe(domRef.current);
-
-    return () => (copy ? observer.unobserve(copy) : undefined);
-  }, [domRef]);
-  
+function InfoSection({children, span = "col-span-1", rowSpan = "row-span-1"}) {
   return(
-    <div ref={domRef} className={`${isVisible ? "fadeIn-animation" : "invisible"} ${span} ${rowSpan} grid col-span-1 max-h-max mx-auto p-3 border-2 bg-gray-300 shadow-lg` + (hover ? " hover:bg-gray-400" : "")}>
+    <div data-aos="zoom-in-up" className={`${span} ${rowSpan} grid col-span-1 max-h-max mx-auto p-3 border-2 bg-gray-300 shadow-sm hover:shadow-2xl`}>
       {children}
     </div>
   );

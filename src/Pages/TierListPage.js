@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import NavBar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 import Sidebar from "../Components/TierListPage/Sidebar";
 import Square from '../Components/TierListPage/Square';
 import HelpSection from '../Components/TierListPage/HelpSection';
@@ -171,7 +172,7 @@ function TierListPage({data, paramPage}) {
   const positions = [1, 2, 3, 4, 5, 6, 7];
 
   return (
-    <div className="font-mono w-full h-[150vh] bg-black text-white content-center">
+    <div className="font-mono w-full bg-black text-white content-center">
       <NavBar />
       <Sidebar /> {/* Make this better, sticky to side and maybe a column */}
       <div className='flex mx-auto align-middle'>
@@ -208,13 +209,14 @@ function TierListPage({data, paramPage}) {
       <ExportSection doDownload={doDownload} doUpload={doUpload} exportTiers={exportTiers} url={url}/>
       <a href={url} ref={download} download="tiers.json" className="hidden">
           Do the download
-        </a>
-        <input type="file" className="hidden"
-            multiple={false}
-            accept=".json"
-            ref={upload}
-            onChange={evt => openFile(evt)}
-        />
+      </a>
+      <input type="file" className="hidden"
+          multiple={false}
+          accept=".json"
+          ref={upload}
+          onChange={evt => openFile(evt)}
+      />
+      <Footer />
     </div>
   );
 }
