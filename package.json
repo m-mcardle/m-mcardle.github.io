@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://m-mcardle.github.io/",
   "dependencies": {
+    "@react-spring/parallax": "^9.4.4",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -16,6 +17,7 @@
     "react-router": "^6.1.1",
     "react-router-dom": "^6.1.1",
     "react-scripts": "next",
+    "react-spring": "^9.4.4",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

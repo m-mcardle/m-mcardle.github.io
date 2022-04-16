@@ -106,4 +106,5 @@ export const Images = {
    Visualizer: `${ImagesDir}/F1-Visualizer.png`,
    Wendys: `${ImagesDir}/FastFood/wendys.png`,
    Yuki: `${ImagesDir}/Drivers/yuki.png`,
+   ReactNative: 'https://miro.medium.com/max/1000/1*ub1DguhAtkCLvhUGuVGr6w.png',
 };

@@ -1,179 +1,261 @@
-import MyLink from '../Components/MyLink';
-import NavBar from '../Components/Navbar';
-import Footer from '../Components/Footer';
-
-import DropDownSection from '../Components/DropDownSection';
-
-import InfoSection from '../Components/HomePage/InfoSection';
-
 import { Images } from '../Data/Images';
 
+import { useState } from 'react';
+
+import { Parallax, ParallaxLayer } from '@react-spring/parallax';
+import { animated, useSpring, config } from 'react-spring';
+
+import { GoChevronDown } from 'react-icons/go';
+import { AiFillLinkedin, AiFillGithub, AiOutlineMail } from 'react-icons/ai'
+
+
 function HomePage() {
+
+  const [flip, set] = useState(false)
+  const props = useSpring({
+    to: { opacity: 1 },
+    from: { opacity: 0 },
+    reset: true,
+    reverse: flip,
+    delay: 50,
+    config: config.slow,
+    onRest: () => set(!flip),
+  })
+
   return (
-    <div className="font-mono">
-      <NavBar/>
-      <div className='pt-5 bg-gradient-to-r from-gray-400 to-gray-200'>
-        <div className='grid md:grid-cols-3 grid-cols-1 gap-4 h-max px-5 2xl:mx-48'>
-          <InfoSection span='md:col-span-3' rowSpan='row-span-2'>
-            <p className='font-bold text-6xl text-center'>Matthew J. McArdle</p>
-            <div className='flex flex-row m-2'>
-              <img src={Images.Me} alt="Matthew McArdle" className='max-h-[200px]'/>
-              <p className='mx-2'>
-                Welcome to my website! On this page I have a few cards that go over some of my interests and experiences.
-                I also have a separate <MyLink to="/MagnetPage" text='Co-op Page'/> going over my amazing experience at Magnet Forensics during my co-op term.
-                You can also find a <MyLink to="/ResumePage" text='Digital Resume'/> on another page of this website.
-                I also built out a silly little <MyLink to="/TierLists/F1" text='Tier List Page'/> as a side project to learn more about React.js,
-                so if you want to see how I rank F1 drivers, UFC fighters and some fast food places go take a look, and see how your picks compare to mine.
+    <div className='font-mono'>
+      <Parallax pages={5} className='bg-black text-white'>
+        {/* Background with stars */}
+        <ParallaxLayer
+          offset={0}
+          speed={0}
+          factor={5}
+          style={{
+            backgroundImage: `url(stars.jpg)`,
+            backgroundSize: 'cover'
+          }}
+        >
+        </ParallaxLayer>
+
+        {/* Contact Info */}
+        <ParallaxLayer
+          offset={1}
+          speed={2}
+          sticky={{start: 1.25, end: 5}}
+        >
+          <ContactInfo />
+        </ParallaxLayer>
+
+        {/* Hello Message */}
+        <ParallaxLayer
+          offset={0.5}
+          speed={2}
+          factor={0.5}
+        >
+          <div className='text-center'>
+            <p className='text-[72px]'>Hello World!</p>
+          </div>
+          <animated.div style={props} className='fixed bottom-0 left-[50%] translate-x-[-50%]'>
+            <p className='text-sm font-light text-center'>Scroll</p>
+            <GoChevronDown color='white' size={64}/>
+          </animated.div>
+        </ParallaxLayer>
+
+        {/* Introduction, Education, and Skills */}
+        <ParallaxLayer
+          offset={1}
+          speed={1}
+          factor={0.5}
+        >
+          <div className={`relative md:text-left text-center p-10 ${styles.leftCenter}`}>
+            <p className='font-bold text-[72px]'>Welcome!</p>
+          </div>
+          <div className={`fixed ${styles.leftCenter} ${styles.border} flex flex-row min-w-[30%] bg-[#3B3B3B] m-5`}>
+            <img src={Images.Me} alt="Matthew McArdle" className='max-h-[200px]'/>
+            <div className='flex flex-col justify-center text-center w-full'>
+              <h2 className='font-bold text-[42px]'>
+                Hey there! 
+              </h2>
+              <p className='mx-2 text-[10px]'>
+                My name is Matt and this is my website!
               </p>
             </div>
-          </InfoSection>
-          <InfoSection>
-            <img src={Images.Guelph} alt="University of Guelph" className='max-h-[100px] mx-auto'/>
+          </div>
+
+          <div className={`relative md:text-right text-center p-10 ${styles.rightCenter}`}>
+            <p className='font-bold text-[72px]'>Education</p>
+          </div>
+          <div className={`w-[35%] bg-[#3B3B3B] fixed m-5 ${styles.rightCenter} ${styles.border}`}>
+            <div className='bg-white p-5'>
+              <img src={Images.Guelph} alt="University of Guelph" className='max-h-[100px] mx-auto'/>
+            </div>
             <p className="m-2">
-            My name is Matt McArdle and I am a Software Engineering student at the University of Guelph.
+            I am a Software Engineering student at the University of Guelph.
             </p>
-            <DropDownSection extraSection={
-              <ul className='ml-3 list-disc'>
-                <li>3rd year student</li>
-                <li>Planning to take a Minor in business</li>
+            <ul className='pl-10 list-disc py-3'>
+                <li>Pursuing a minor in Business</li>
                 <li>Deans List student with GPA of 87.9%</li>
+                <li>Recipient of Braithewaite Business Scholarship</li>
+                <li>Graduating May 2024</li>
               </ul>
-            }/>
-          </InfoSection>
-          <InfoSection span="md:col-span-2">
-            <img src={Images.Magnet} alt="Magnet Forensics" className='max-h-[100px] mx-auto'/>
-            <p>
-            I've just completed an amazing co-op term at Magnet Forensics.
-            They are a Waterloo company specializing in building tools for Law Enforcement or Private Investigators to uncover digital evidence on devices.
-            </p>
-            <p>
-            If you want to learn more about it click <MyLink to="MagnetPage" /> to go to my page dedicated to my experience there.
-            </p>
-          </InfoSection>
-          <InfoSection span="md:col-span-3"  hover={false}>
-            <div>
-              <img src={Images.F1} alt="F1" className='max-h-[100px] mx-auto'/>
-              <p className='m-2 text-center'>
-                One of my biggest interests is Formula 1. 
-                My family has always been racing fans, so as a kid I was always watching alongside my Mom and Dad, but more recently took a much larger interest in the sport.
-              </p>
-              <div className='grid md:grid-cols-3 grid-cols-1 gap-3'>
-                <InfoSection>
-                  <div>
-                    <div className='flex flex-row my-auto'>
-                      <img src={Images.Lando} alt="Lando Norris" className='hidden lg:flex flex-col max-h-[50px] my-auto mx-auto'/>
-                      <img src={Images.McLaren} alt="McLaren" className='flex flex-col max-h-[50px] my-auto mx-auto'/>
-                    </div>
-                    <div className='flex flex-row'>
-                      <p className='inline'>
-                      My favourite driver on the grid currently is Lando Norris, so I in turn root for the McLaren F1 team.
-                      If you want to see how I ranked all other drivers of the 2021 season, click <MyLink to="/TierLists/F1"/>.
-                      </p>
-                    </div>
-                  </div>
-                </InfoSection>
-                <InfoSection span='md:col-span-2' rowSpan='row-span-2'>
-                  <div>
-                    <p className='text-xl font-bold text-center'>
-                      Personal F1 Projects
-                    </p>
-                    <p className='my-2'>
-                    I've used my interest in Formula 1 to spark ideas for a few side projects. 
-                    </p>
-                    <p className='my-2'>
-                    The first one was to embed a Twitch chat element into the official F1TV player.
-                    The idea behind it was that I thought it would be neat to include a live chat for F1 fans to all be in during the race.
-                    I haven't made an effort to actually get anyone to adopt it yet, but it was a fun project to do no matter what.
-                    </p>
-                    <DropDownSection extraSection={
-                      <div>
-                        <img src={Images.Extension} alt="F1 Twitch Chat Extension" className='thumbnail mx-auto'/>
-                      </div>
-                    }/>
-                    <p className='my-2'>
-                    The second one was to build out a standings visualizer for depicting championship battles as seasons progress.
-                    The inspiration came to me while watching the amazing 2021 F1 season unfold. 
-                    This included a back and forth battle between Max Verstappen and Lewis Hamilton which ended up with them being TIED on points going into the 22nd/final race.
-                    I wanted to visually see their points totals progress (because I love visualized statistics), so I used the public <a href="https://ergast.com/mrd/" className='font-bold hover:underline'>Ergast F1 API</a> to get results 
-                    and used the Python <a href="https://plotly.com/" className='font-bold hover:underline'>Plot.ly</a> library to graph them.
-                    </p>
-                    <DropDownSection extraSection={
-                      <div>
-                        <img src={Images.Visualizer} alt="F1 Standings Visualizer" className='thumbnail mx-auto'/>
-                      </div>
-                    }/>
-                  </div>
-                </InfoSection>
-                <InfoSection>
-                  <img src={Images.Gulf} alt="Gulf McLaren F1 car" className='thumbnail mx-auto'/>
-                </InfoSection>
-              </div>
+          </div>
+
+          <div className={`relative md:text-left text-center p-10 ${styles.leftCenter}`}>
+            <p className='font-bold text-[72px]'>Skills</p>
+          </div>
+          <div className={`fixed ${styles.leftCenter} max-w-[30%] bg-white text-black m-5 p-2 grid grid-cols-2 text-center`}>
+            <img src={Images.Csharp} alt="C#" className='max-h-[100px] max-w-[100px] p-2'/>
+            <p className='my-auto'>90%</p>
+            <img src={"https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"} alt="React.js" className='max-h-[100px] max-w-[100px] p-4'/>
+            <p className='my-auto'>90%</p>
+            <img src={Images.Python} alt="Python" className='max-h-[100px] max-w-[100px] p-4'/>
+            <p className='my-auto'>80%</p>
+          </div>
+        </ParallaxLayer>
+
+        {/* Work Experience */}
+        <ParallaxLayer
+          offset={2}
+          speed={2}
+        >
+          <div className='relative text-center p-10'>
+            <p className='font-bold text-[72px]'>Work Experience</p>
+          </div>
+          <div className={`w-[60%] bg-[#3B3B3B] fixed ${styles.center} ${styles.border}`}>
+            <div className='bg-white p-5'>
+              <img src={Images.Magnet} alt="Magnet Forensics" className='max-h-[100px] mx-auto'/>
             </div>
-          </InfoSection>
-          <InfoSection>
-            <p className='font-bold text-xl my-2 mx-auto text-center'>UFC</p>
-            <p className='inline'>
-              UFC is pretty neat. Favourite fighter is Khabib.
-              If you want to see how I rank a bunch of other fighters, check out my Tier List page by clicking <MyLink to="/TierLists/UFC"/>.
-            </p>
-            <img src={Images.Khabib} alt="Khabib Nurmagomedov" className='thumbnail mx-auto'/>
-          </InfoSection>
-          <InfoSection>
-            <p className='font-bold text-xl my-2 mx-auto text-center'>NHL</p>
-            <p>
-              Been a hockey fan my whole life, but more recently haven't had the same interest.
-              Favourite player in Marc Andre Fleury cause he's the goat, so I've basically been bouncing around who I support cause he keeps getting traded.
-            </p>
-            <img src={Images.Fluery} alt="Marc Andre Fleury" className='thumbnail mx-auto'/>
-          </InfoSection>
-          <InfoSection rowSpan='row-span-2 content-between'>
-            <div className='flex-row row-span-1'>
-              <p className='font-bold text-xl my-2 mx-auto text-center'>Track Days</p>
-              <p>
-                One of my favourite ways to spend a day is driving at a track. 
-                My Dad and I have joined a group of some really fun people to rent out the Grand Bend Motorplex for some open lapping every other week of the summer.
-                Most of our driving is done in my Dad's Ariel Atom or my Hyundai Veloster N but I've been lucky enough to try out a Lotus Elise, Caterham 7, and a fun little Fiat 500 Abarth.
+            <div className='flex flex-row'>
+              <p className="m-2">
+                Magnet Forensics Software Developer (Co-op)
+              </p>
+              <p className="fixed m-2 text-right right-0 lg:block hidden">
+                May 2021 - December 2021
               </p>
             </div>
-            <div>
-              <img src={Images.GrandBend} alt="Grand Bend Motorplex" className='thumbnail'/>
-            </div>
-            <div>
-              <div className='flex flex-row overflow-auto'>
-                  <img src={Images.Atom} alt="Ariel Atom" className='thumbnail'/>
-                  <img src={Images.Lotus} alt="Lotus Elise" className='thumbnail'/>
-                  <img src={Images.Caterham} alt="Caterham 7" className='thumbnail'/>
-                  <img src={Images.Veloster} alt="Veloster N" className='thumbnail'/>
-                  <img src={Images.Fiat} alt="Fiat 500" className='thumbnail'/>
+            <ul className='pl-10 list-disc py-3'>
+                <li>Nominated for the University of Guelph's Co-op Student of the Year</li>
+                <li>Developed C# microservices</li>
+                <li>Created an XML parser to interpret documents and ingest them via a CLI</li>
+                <li>Built Jenkins pipelines to automate deployment and manage CI/CD workflows</li>
+                <li>Frond-end development using React.js and a custom Bootstrap-based library</li>
+                <li>Wrote Bash scripts to perform installations and upgrades of Kubernetes clusters</li>
+                <li>Managed cloud resources hosted on Microsoft Azure and AWS</li>
+              </ul>
+          </div>
+        </ParallaxLayer>
+
+        {/* Projects */}
+        <ParallaxLayer
+          offset={3}
+          speed={2}
+        >
+          <div className='relative text-center p-10'>
+            <p className='font-bold text-[72px]'>Personal Projects</p>
+          </div>
+          <div className='flex flex-row flex-wrap px-10'>
+            <div className={`flex flex-col max-w-[30%] bg-[#3B3B3B] m-5 ${styles.border}`}>
+              <div className='bg-white p-5'>
+                <img src={Images.Python} alt="Python" className='max-h-[100px] mx-auto'/>
               </div>
-              <p className='text-xs opacity-50 text-center'>Scroll to see all the cars I've driven so far</p>
+              <div>
+                <p className="float-left m-2">
+                  F1 Standings Visualizer
+                </p>
+                <p className="float-right text-right m-2 lg:block hidden">
+                  2021
+                </p>
+              </div>
+              <ul className='pl-10 list-disc py-3'>
+                <li>Using Dash and Plot.ly to display a visualizer of F1 standings in all F1 seasons</li>
+                <li>Parsed XML responses from a public API into a Plot.ly supported format</li>
+                <li>Cached response data using a MySQL database</li>
+                <li>Hosted application using AWS to allow for remote access to the visualizer</li>
+              </ul>
             </div>
-          </InfoSection>
-          <InfoSection>
-            <p className='font-bold text-xl my-2 mx-auto text-center'>
-              Sim Racing
-            </p>
-            <p>
-              One hobby I've really taken a liking to is Sim Racing. 
-              I have a setup with a Thrustmaster T500 and a decent PC that can handle most sims. 
-              My go-to sim is iRacing and I typically try and race open-wheelers like the Formula 3 or Formula Renault.
-            </p>
-            <img src={Images.iRacing} alt="iRacing" className='thumbnail'/>
-          </InfoSection>
-          <InfoSection>
-            <p className='font-bold text-xl my-2 mx-auto text-center'>
-              Video Games
-            </p>
-            <p>
-              Mainly into FPS games and Sports Games, and at the moment I basically only play Rocket League with my roommates.
-            </p>
-            <img src={Images.RocketLeague} alt="Rocket League" className='thumbnail'/>
-          </InfoSection>
-        </div>
-        <Footer />
-      </div>
+            <div className={`flex flex-col max-w-[30%] bg-[#3B3B3B] m-5 ${styles.border}`}>
+              <div className='bg-white p-5'>
+                <img src={Images.F1} alt="Python" className='max-h-[100px] mx-auto'/>
+              </div>
+              <div>
+                <p className="float-left m-2">
+                  Twitch Chat Chrome Extension
+                </p>
+                <p className="float-right text-right m-2 lg:block hidden">
+                  2021
+                </p>
+              </div>
+              <ul className='pl-10 list-disc py-3'>
+                  <li>Embeds a Twitch chat element into official F1 and ESPN+ video players</li>
+                  <li>Developed using HTML and JavaScript</li>
+                  <li>Allows for F1 or UFC fans to communicate easily during the broadcasts</li>
+                </ul>
+            </div>
+            <div className={`flex flex-col max-w-[30%] bg-[#3B3B3B] m-5 ${styles.border}`}>
+              <div className='bg-white p-5'>
+                <img src={Images.React} alt="ReactJs" className='max-h-[100px] mx-auto'/>
+              </div>
+              <div>
+                <p className="float-left m-2">
+                  Personal Website with React.js
+                </p>
+                <p className="float-right text-right m-2 lg:block hidden">
+                  2021
+                </p>
+              </div>
+              <ul className='pl-10 list-disc py-3'>
+                  <li>Styled pages using Tailwind CSS</li>
+                  <li>Built responsive web application using the React framework</li>
+                  <li>Built interactive page to generate Tier Lists</li>
+                </ul>
+            </div>
+            <div className={`flex flex-col max-w-[30%] bg-[#3B3B3B] m-5 ${styles.border}`}>
+              <div className='bg-white p-5'>
+                <img src={Images.ReactNative} alt="React Native" className='max-h-[100px] mx-auto'/>
+              </div>
+              <div>
+                <p className="float-left m-2">
+                  React Native App with Firebase
+                </p>
+                <p className="float-right text-right m-2 lg:block hidden">
+                  2022
+                </p>
+              </div>
+              <ul className='pl-10 list-disc py-3'>
+                <li>Firebase Authentication to manage users</li>
+                <li>Stored user's data using Firestore</li>
+                <li>Built app using React Native for iOS, Android, and the Web</li>
+              </ul>
+            </div>
+          </div>
+        </ParallaxLayer>
+      </Parallax>
     </div>
   );
 }
+
+function ContactInfo() {
+  return (
+    <div className='fixed flex flex-col space-y-2 items-end bg-white text-black p-5 w-fit right-0'>
+      <a href="https://www.linkedin.com/in/matthew-j-mcardle/">
+        <AiFillLinkedin className='fill-blue-600' style={{height: "2em", width: "2em"}}/>
+      </a>
+      <a href="https://github.com/m-mcardle/">
+        <AiFillGithub className='fill-black=' style={{height: "2em", width: "2em"}}/>
+      </a>
+      <a href="mailto: matthew.j.mcardle@gmail.com">
+        <AiOutlineMail className='fill-black' style={{height: "2em", width: "2em"}}/>
+      </a>
+    </div>
+  );
+}
+
+const styles = {
+  border: 'border border-white',
+  leftCenter: 'md:left-20 md:translate-x-0 left-[50%] translate-x-[-50%]',
+  rightCenter: 'md:right-20 md:translate-x-0 right-[50%] translate-x-[50%]',
+  center: 'left-[50%] translate-x-[-50%]'
+}
+
 
 export default HomePage;
