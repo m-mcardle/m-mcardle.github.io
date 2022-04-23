@@ -26,6 +26,7 @@ export const Images = {
    Bash: `${ImagesDir}/bash.jpeg`,
    Business: `${ImagesDir}/Business.jpeg`,
    BurgerKing: `${ImagesDir}/FastFood/burgerking.png`,
+   C: 'https://upload.wikimedia.org/wikipedia/commons/1/19/C_Logo.png',
    Caterham: `${ImagesDir}/caterham.png`,
    Carlos: `${ImagesDir}/Drivers/carlos.png`,
    Cejudo: `${ImagesDir}/Fighters/cejudo.png`,
@@ -58,6 +59,8 @@ export const Images = {
    Gulf: `${ImagesDir}/gulf.jpeg`,
    iRacing: `${ImagesDir}/iracing.png`,
    Izzy: `${ImagesDir}/Fighters/izzy.png`,
+   Java: 'https://logoeps.com/wp-content/uploads/2013/03/java-eps-vector-logo.png',
+   JavaScript: 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Javascript_Logo.png',
    Jenkins: `${ImagesDir}/jenkins.png`,
    Jon: `${ImagesDir}/Fighters/jon.png`,
    KFC: `${ImagesDir}/FastFood/kfc.png`,
@@ -106,4 +109,5 @@ export const Images = {
    Visualizer: `${ImagesDir}/F1-Visualizer.png`,
    Wendys: `${ImagesDir}/FastFood/wendys.png`,
    Yuki: `${ImagesDir}/Drivers/yuki.png`,
+   ReactNative: 'https://miro.medium.com/max/1000/1*ub1DguhAtkCLvhUGuVGr6w.png',
 };
