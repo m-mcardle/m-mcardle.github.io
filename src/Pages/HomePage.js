@@ -74,7 +74,7 @@ function HomePage() {
           <div className={`relative lg:text-left text-center p-10 ${styles.leftCenter}`}>
             <p className='font-bold text-[72px]'>Welcome!</p>
           </div>
-          <div className={`relative flex flex-row lg:w-[30%] w-fit bg-[${colors.black}] m-5 ${styles.leftCenter} ${styles.border}`}>
+          <div className={`relative flex flex-row lg:w-[30%] w-fit ${styles.blackBackground} m-5 ${styles.leftCenter} ${styles.border}`}>
             <img src={Images.Me} alt="Matthew McArdle" className='max-h-[200px]'/>
             <div className='flex flex-col justify-center text-center w-full'>
               <h2 className='font-bold text-[42px]'>
@@ -93,7 +93,7 @@ function HomePage() {
             <p className='font-bold text-[72px]'>Education</p>
           </div>
           <div className={`relative ${styles.rightCenter}`}>
-            <div className={`lg:w-[40%] w-[60%] bg-[${colors.black}] lg:ml-auto lg:mr-5 mx-auto my-5 ${styles.border}`}>
+            <div className={`lg:w-[40%] w-[60%] ${styles.blackBackground} lg:ml-auto lg:mr-5 mx-auto my-5 ${styles.border}`}>
               <div className='bg-white p-5'>
                 <img src={Images.Guelph} alt="University of Guelph" className='max-h-[100px] mx-auto'/>
               </div>
@@ -112,7 +112,7 @@ function HomePage() {
           <div className={`relative lg:text-left text-center p-10 ${styles.leftCenter}`}>
             <p className='font-bold text-[72px]'>Skills</p>
           </div>
-          <div className={`relative lg:max-w-[20%] max-w-[60%] bg-[${colors.black}] text-white m-5 p-2 grid grid-cols-2 text-center ${styles.leftCenter} ${styles.border}`}>
+          <div className={`relative lg:max-w-[20%] max-w-[60%] ${styles.blackBackground} text-white m-5 p-2 grid grid-cols-2 text-center ${styles.leftCenter} ${styles.border}`}>
             <img src={Images.C} alt="C" className='max-h-[100px] max-w-[100px] p-5'/>
             <Skillbar skill={"95%"}/>
             <img src={Images.Csharp} alt="C#" className='max-h-[100px] max-w-[100px]'/>
@@ -142,7 +142,7 @@ function HomePage() {
           <div className='relative text-center p-10'>
             <p className='font-bold text-[72px]'>Work Experience</p>
           </div>
-          <div className={`w-[60%] bg-[${colors.black}] relative ${styles.center} ${styles.border}`}>
+          <div className={`w-[60%] ${styles.blackBackground} relative ${styles.center} ${styles.border}`}>
             <div className='bg-white p-5'>
               <img src={Images.Magnet} alt="Magnet Forensics" className='max-h-[100px] mx-auto'/>
             </div>
@@ -164,7 +164,7 @@ function HomePage() {
               <li>Managed cloud resources hosted on Microsoft Azure and AWS</li>
             </ul>
           </div>
-          <div className={`w-[60%] bg-[${colors.black}] top-10 relative ${styles.center} ${styles.border}`}>
+          <div className={`w-[60%] ${styles.blackBackground} top-10 relative ${styles.center} ${styles.border}`}>
             <div className='bg-white p-5'>
               <img src={'Vidyard.svg'} alt="Vidyard" className='max-h-[100px] mx-auto'/>
             </div>
@@ -193,7 +193,7 @@ function HomePage() {
             <p className='font-bold text-[72px]'>Personal Projects</p>
           </div>
           <div className='flex flex-row flex-wrap justify-center p-10 ml-20 mr-20'>
-            <div className={`${styles.projectCard} ${styles.border}`}>
+            <div className={`${styles.projectCard} ${styles.blackBackground} ${styles.border}`}>
               <div className='flex-grow bg-white p-5'>
                 <img src={Images.Python} alt="Python" className='max-h-[100px] mx-auto'/>
               </div>
@@ -213,7 +213,7 @@ function HomePage() {
               </ul>
               <ProjectLink link={"https://github.com/m-mcardle/f1-visualizer"} />
             </div>
-            <div className={`${styles.projectCard} ${styles.border}`}>
+            <div className={`${styles.projectCard} ${styles.blackBackground} ${styles.border}`}>
               <div className='flex-grow bg-white p-5'>
                 <img src={Images.F1} alt="Python" className='max-h-[100px] mx-auto'/>
               </div>
@@ -232,7 +232,7 @@ function HomePage() {
               </ul>
               <ProjectLink link={"https://github.com/m-mcardle/twitch-chat-extension"} />
             </div>
-            <div className={`${styles.projectCard} ${styles.border}`}>
+            <div className={`${styles.projectCard} ${styles.blackBackground} ${styles.border}`}>
               <div className='bg-white p-5'>
                 <img src={Images.React} alt="ReactJs" className='max-h-[100px] mx-auto'/>
               </div>
@@ -251,7 +251,7 @@ function HomePage() {
               </ul>
               <ProjectLink link={"https://github.com/m-mcardle/m-mcardle.github.io"} />
             </div>
-            <div className={`${styles.projectCard} ${styles.border}`}>
+            <div className={`${styles.projectCard} ${styles.blackBackground} ${styles.border}`}>
               <div className='bg-white p-5'>
                 <img src={Images.ReactNative} alt="React Native" className='max-h-[100px] mx-auto'/>
               </div>
@@ -271,7 +271,7 @@ function HomePage() {
               </ul>
               <ProjectLink link={"https://github.com/m-mcardle/Agile9-App"} />
             </div>
-            <div className={`${styles.projectCard} ${styles.border}`}>
+            <div className={`${styles.projectCard} ${styles.blackBackground} ${styles.border}`}>
               <div className='bg-white p-5'>
                 <img src={Images.GasPriceAPI} alt="Gas Price API" className='max-h-[100px] mx-auto'/>
               </div>
@@ -291,7 +291,7 @@ function HomePage() {
               </ul>
               <ProjectLink link={"https://rapidapi.com/mmcardle-drx9FYQNK/api/canadian-gas-prices/"} type="API" />
             </div>
-            <div className={`${styles.projectCard} ${styles.border}`}>
+            <div className={`${styles.projectCard} ${styles.blackBackground} ${styles.border}`}>
               <div className='bg-white p-5'>
                 <img src={Images.CarpoolCalc} alt="Gas Price API" className='max-h-[100px] mx-auto'/>
               </div>
@@ -347,16 +347,13 @@ function ProjectLink({link, type = 'GitHub'}) {
   );
 }
 
-const colors = {
-  black: '#1B1212'
-}
-
 const styles = {
   border: `border border-white`,
   leftCenter: `lg:left-20 lg:translate-x-0 left-[50%] translate-x-[-50%]`,
   rightCenter: `lg:right-20 lg:translate-x-0 lg:left-[auto] right-[auto] left-[50%] translate-x-[-50%]`,
   center: `left-[50%] translate-x-[-50%]`,
-  projectCard: `flex flex-col xl:w-[40%] w-[80%] bg-[${colors.black}] m-5`,
+  projectCard: `flex flex-col xl:w-[40%] w-[80%] m-5`,
+  blackBackground: `bg-[#1B1212]`,
 }
 
 
