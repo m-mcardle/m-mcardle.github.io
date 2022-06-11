@@ -35,7 +35,7 @@ function ResumePage() {
               title="Work Experience"
             >
               <ListCard
-                title="Magnet Forensics Software Developer Co-op (May 2021-December 2021)"
+                title="Magnet Forensics Software Developer Co-op (2021)"
                 elements={[
                   "Developed microservices written in C#",
                   "Worked with installer scripts written in Bash to deploy a Kubernetes application",
@@ -108,9 +108,9 @@ function ResumePage() {
                 title="Bachelor of Computing, Software Engineering (Co-op) [2019-Present]"
                 elements={[
                   "University of Guelph Dean's List Student",
-                  "Planning to achieve a Minor in Business",
+                  "Persuing a Minor in Business",
                   "In-course experience with C, Java, Python, and Perl",
-                  "87.9% GPA"
+                  "88.8% GPA"
                 ]}
                 images={[Images.Gryphon]}
               />
@@ -130,7 +130,6 @@ function ResumePage() {
                   "Deans List student in all academic semesters [2019-Present]",
                   "Braithwaite Business Scholarship Recipient [2020]",
                   "Nominee for the Ian Pavlinic Memorial Award (University of Guelph Co-op Student of the Year) [2021]"
-                  
                 ]}
                 images={[Images.Award]}
               />
@@ -173,7 +172,7 @@ function MatrixAnimation() {
     }
   }
   return (
-    <div className="bg-theme-primary text-theme-secondary min-w-full z-1 matrix-animation">
+    <div className="bg-theme-primary text-theme-secondary min-w-full z-1 matrix-animation opacity-25">
       {string}
     </div>
   );

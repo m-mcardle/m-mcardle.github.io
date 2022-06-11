@@ -13,7 +13,7 @@ module.exports = {
         },
         theme: {
           primary: '#0d0208',
-          secondary: '#008f11',
+          secondary: '#00760e',
           tertiary: '#0d0208'
         }
       }

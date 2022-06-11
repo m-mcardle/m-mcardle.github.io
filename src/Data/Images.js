@@ -8,7 +8,6 @@
 // "185.199.110.153/32",
 // "185.199.111.153/32",
 
-
 const AwsUrl = 'https://s3.us-east-2.amazonaws.com/m-mcardle.github.io'
 const ImagesDir = `${AwsUrl}/Images`;
 
@@ -110,4 +109,6 @@ export const Images = {
    Wendys: `${ImagesDir}/FastFood/wendys.png`,
    Yuki: `${ImagesDir}/Drivers/yuki.png`,
    ReactNative: 'https://miro.medium.com/max/1000/1*ub1DguhAtkCLvhUGuVGr6w.png',
+   GasPriceAPI: 'gasprice.png',
+   CarpoolCalc: 'CarpoolCalc.png'
 };
