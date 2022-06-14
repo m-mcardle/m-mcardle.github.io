@@ -9,6 +9,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "aos": "^2.3.4",
+    "insights-js": "^1.2.11",
     "react": "^17.0.2",
     "react-dnd": "^14.0.4",
     "react-dnd-html5-backend": "^14.0.2",
