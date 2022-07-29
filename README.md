@@ -1,3 +1,21 @@
+# Personal Portfolio Website 🖥️
+
+## React Web App
+
+### Description 📚
+
+Porfolio website for providing information about my work experience and personal projects. Built using React and Tailwind CSS. Contains a page for information about my projects and work experience, a report about my co-op term at Magnet Forensics, and just for fun a Tier List Maker to create tier lists of F1 drivers, UFC Fighters, and Fast Food places.
+
+### Infrastructure 🏗️
+
+Built using React and styled using Tailwind CSS.
+
+### Related Concepts / Learnings 💭
+
+* React.js
+* TailwindCSS
+
+
 # Welcome to my GitHub Pages!
 
 I built my website using React.js and Tailwind CSS to create a responsive and component-driven web application.
